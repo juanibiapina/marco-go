@@ -14,13 +14,26 @@ func validateToken(t *testing.T, token Token, typ TokenType, value string) {
 	}
 }
 
-func TestLex(t *testing.T) {
-	c := Lex("1")
-
+func assertNextToken(t *testing.T, c chan Token, typ TokenType, value string) {
 	select {
 	case token := <-c:
-		validateToken(t, token, TOKEN_NUMBER, "1")
+		validateToken(t, token, TOKEN_NUMBER, value)
 	case <-time.After(2 * time.Second):
-		t.Error("Did not produce a token in time")
+		t.Errorf("Expected '%v' but did not produce a token in time", value)
+	}
+}
+
+var tokenTests = []struct {
+	value string
+	typ   TokenType
+}{
+	{"1", TOKEN_NUMBER},
+	{"2", TOKEN_NUMBER},
+}
+
+func TestLexTokens(t *testing.T) {
+	for _, tt := range tokenTests {
+		c := Lex(tt.value)
+		assertNextToken(t, c, tt.typ, tt.value)
 	}
 }
