@@ -29,6 +29,7 @@ var tokenTests = []struct {
 }{
 	{"1", TOKEN_NUMBER},
 	{"2", TOKEN_NUMBER},
+	{"823", TOKEN_NUMBER},
 }
 
 func TestLexTokens(t *testing.T) {
