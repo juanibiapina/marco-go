@@ -5,17 +5,6 @@ import (
 	"unicode/utf8"
 )
 
-type TokenType int
-
-type Token struct {
-	typ   TokenType
-	value string
-}
-
-const (
-	TOKEN_NUMBER TokenType = iota
-)
-
 type lexer struct {
 	input  string
 	tokens chan Token
