@@ -34,7 +34,7 @@ var numbersTests = []struct {
 
 func TestNumbers(t *testing.T) {
 	for _, tt := range numbersTests {
-		c := Lex(tt.value)
+		c := Scan(tt.value)
 		assertNextToken(t, c, tt.typ, tt.value)
 	}
 }
