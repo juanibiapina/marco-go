@@ -23,7 +23,7 @@ func assertNextToken(t *testing.T, c chan Token, typ TokenType, value string) {
 	}
 }
 
-var tokenTests = []struct {
+var numbersTests = []struct {
 	value string
 	typ   TokenType
 }{
@@ -32,8 +32,8 @@ var tokenTests = []struct {
 	{"823", TOKEN_NUMBER},
 }
 
-func TestLexTokens(t *testing.T) {
-	for _, tt := range tokenTests {
+func TestNumbers(t *testing.T) {
+	for _, tt := range numbersTests {
 		c := Lex(tt.value)
 		assertNextToken(t, c, tt.typ, tt.value)
 	}
