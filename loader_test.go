@@ -6,7 +6,7 @@ import (
 )
 
 func TestEvalString(t *testing.T) {
-	expr := EvalString("1")
+	expr := Eval("1")
 	expected := lang.Number{1}
 
 	if expr != expected {

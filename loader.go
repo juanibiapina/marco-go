@@ -5,19 +5,28 @@ import (
 	"github.com/juanibiapina/marco/lang"
 	"github.com/juanibiapina/marco/parser"
 	"github.com/juanibiapina/marco/scanner"
+	"log"
 )
 
-func makeSourceString(src string) []byte {
-	return []byte(src)
+func convert(src interface{}) []byte {
+	switch src := src.(type) {
+	case []byte:
+		return src
+	case string:
+		return []byte(src)
+	default:
+		log.Fatalf("Unnexpected type: '%T'", src) // use errors instead
+		return nil
+	}
 }
 
-func Eval(src []byte) lang.Expr {
+func eval(src []byte) lang.Expr {
 	tokens := scanner.Scan(src)
 	ast := parser.Parse(tokens)
 	expr := interpreter.Eval(ast)
 	return expr
 }
 
-func EvalString(src string) lang.Expr {
-	return Eval(makeSourceString(src))
+func Eval(src interface{}) lang.Expr {
+	return eval(convert(src))
 }
