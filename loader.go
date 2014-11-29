@@ -23,7 +23,7 @@ func convert(src interface{}) []byte {
 func eval(src []byte) lang.Expr {
 	tokens := scanner.Scan(src)
 	ast := parser.Parse(tokens)
-	expr := interpreter.Eval(ast)
+	expr := interpreter.Eval(ast, lang.MakeEnv())
 	return expr
 }
 

@@ -23,3 +23,16 @@ func TestParseNumbers(t *testing.T) {
 		t.Errorf("Expected '%v' but got '%v'", 1, v.Value)
 	}
 }
+
+func TestParseNames(t *testing.T) {
+	ast := Parse(scan("def"))
+
+	v, ok := ast.(lang.Name)
+
+	if !ok {
+		t.Error("Expected type Name")
+	}
+	if v.Value != "def" {
+		t.Errorf("Expected '%v' but got '%v'", "def", v.Value)
+	}
+}

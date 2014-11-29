@@ -3,6 +3,7 @@ package scanner
 import (
 	"github.com/juanibiapina/marco/tokens"
 	"strings"
+	"unicode"
 	"unicode/utf8"
 )
 
@@ -37,18 +38,46 @@ func (l *scanner) acceptRun(values string) {
 	l.backup()
 }
 
-func numberState(l *scanner) stateFn {
+func lexNumber(l *scanner) stateFn {
 	l.acceptRun("0123456789")
 	l.emit(tokens.NUMBER)
 
-	l.tokens <- tokens.New(tokens.NUMBER, "2")
 	return nil
 }
 
-var initialState = numberState
+func (l *scanner) acceptRunFunc(f func(rune) bool) {
+	for f(l.next()) {
+	}
+	l.backup()
+}
+
+func lexName(l *scanner) stateFn {
+	l.acceptRunFunc(unicode.IsLetter)
+	l.emit(tokens.NAME)
+
+	return nil
+}
+
+func lexForm(l *scanner) stateFn {
+	r := l.next()
+
+	if unicode.IsDigit(r) {
+		l.backup()
+		return lexNumber
+	}
+
+	if unicode.IsLetter(r) {
+		l.backup()
+		return lexName
+	}
+
+	return nil
+}
+
+var lexInitial = lexForm
 
 func (l *scanner) run() {
-	for state := initialState; state != nil; {
+	for state := lexInitial; state != nil; {
 		state = state(l)
 	}
 }
