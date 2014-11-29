@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/juanibiapina/marco/interpreter"
-	"github.com/juanibiapina/marco/parser"
-	"github.com/juanibiapina/marco/scanner"
+	"github.com/juanibiapina/marco"
 )
 
 func main() {
-	result := interpreter.Eval(parser.Parse(scanner.Scan([]byte("1"))))
+	result := marco.EvalString("1")
 
 	fmt.Println(result)
 }
