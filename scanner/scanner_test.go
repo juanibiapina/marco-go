@@ -32,6 +32,7 @@ var tokenTests = []struct {
 	{"2", tokens.NUMBER},
 	{"823", tokens.NUMBER},
 	{"def", tokens.NAME},
+	{"", tokens.EOF},
 }
 
 func TestScanTokens(t *testing.T) {

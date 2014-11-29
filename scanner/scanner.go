@@ -17,6 +17,9 @@ type scanner struct {
 
 func (l *scanner) next() (r rune) {
 	r, l.width = utf8.DecodeRune(l.input[l.pos:])
+	if l.width == 0 {
+		return -1
+	}
 	l.pos += l.width
 	return r
 }

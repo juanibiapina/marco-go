@@ -24,6 +24,11 @@ func lexName(l *scanner) stateFn {
 func lexForm(l *scanner) stateFn {
 	r := l.next()
 
+	if r == -1 {
+		l.emit(tokens.EOF)
+		return nil
+	}
+
 	if unicode.IsDigit(r) {
 		l.backup()
 		return lexNumber

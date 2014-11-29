@@ -10,6 +10,7 @@ type Token struct {
 const (
 	NUMBER TokenType = iota
 	NAME
+	EOF
 )
 
 func New(typ TokenType, value string) Token {
@@ -19,6 +20,7 @@ func New(typ TokenType, value string) Token {
 var typeNames = []string{
 	"TOKEN_NUMBER",
 	"TOKEN_NAME",
+	"TOKEN_EOF",
 }
 
 func (typ TokenType) String() string {
