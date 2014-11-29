@@ -32,7 +32,7 @@ var numbersTests = []struct {
 	{"823", TOKEN_NUMBER},
 }
 
-func TestNumbers(t *testing.T) {
+func TestScanNumbers(t *testing.T) {
 	for _, tt := range numbersTests {
 		c := Scan(tt.value)
 		assertNextToken(t, c, tt.typ, tt.value)
