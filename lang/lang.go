@@ -1,12 +1,12 @@
-package marco
+package lang
 
 type Expr interface {
 }
 
 type Number struct {
-	value int64
+	Value int64
 }
 
 type Error struct {
-	message string
+	Message string
 }

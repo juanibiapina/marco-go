@@ -1,13 +1,14 @@
-package marco
+package scanner
 
 import (
+	"github.com/juanibiapina/marco/tokens"
 	"strings"
 	"unicode/utf8"
 )
 
 type scanner struct {
 	input  string
-	tokens chan Token
+	tokens chan tokens.Token
 	start  int
 	pos    int
 	width  int
@@ -25,8 +26,8 @@ func (l *scanner) backup() {
 	l.pos -= l.width
 }
 
-func (l *scanner) emit(typ TokenType) {
-	l.tokens <- Token{typ, l.input[l.start:l.pos]}
+func (l *scanner) emit(typ tokens.TokenType) {
+	l.tokens <- tokens.New(typ, l.input[l.start:l.pos])
 	l.start = l.pos
 }
 
@@ -38,9 +39,9 @@ func (l *scanner) acceptRun(values string) {
 
 func numberState(l *scanner) stateFn {
 	l.acceptRun("0123456789")
-	l.emit(TOKEN_NUMBER)
+	l.emit(tokens.NUMBER)
 
-	l.tokens <- Token{TOKEN_NUMBER, "2"}
+	l.tokens <- tokens.New(tokens.NUMBER, "2")
 	return nil
 }
 
@@ -52,10 +53,10 @@ func (l *scanner) run() {
 	}
 }
 
-func Scan(input string) chan Token {
+func Scan(input string) chan tokens.Token {
 	scanner := &scanner{
 		input:  input,
-		tokens: make(chan Token),
+		tokens: make(chan tokens.Token),
 	}
 	go scanner.run()
 	return scanner.tokens
