@@ -41,3 +41,11 @@ func TestScanTokens(t *testing.T) {
 		assertNextToken(t, c, tt.typ, tt.value)
 	}
 }
+
+func TestScanApplication(t *testing.T) {
+	c := Scan([]byte("(a b)"))
+	assertNextToken(t, c, tokens.LPAREN, "(")
+	assertNextToken(t, c, tokens.NAME, "a")
+	assertNextToken(t, c, tokens.NAME, "b")
+	assertNextToken(t, c, tokens.RPAREN, ")")
+}

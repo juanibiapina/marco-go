@@ -12,6 +12,8 @@ const (
 	NUMBER
 	NAME
 	EOF
+	LPAREN
+	RPAREN
 )
 
 func New(typ TokenType, value string) Token {
@@ -23,6 +25,8 @@ var typeNames = []string{
 	"TOKEN_NUMBER",
 	"TOKEN_NAME",
 	"TOKEN_EOF",
+	"TOKEN_LPAREN",
+	"TOKEN_RPAREN",
 }
 
 func (typ TokenType) String() string {

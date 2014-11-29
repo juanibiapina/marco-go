@@ -11,17 +11,17 @@ func lexNumber(l *scanner) stateFn {
 	l.acceptRun("0123456789")
 	l.emit(tokens.NUMBER)
 
-	return nil
+	return lexInitial
 }
 
 func lexName(l *scanner) stateFn {
 	l.acceptRunFunc(unicode.IsLetter)
 	l.emit(tokens.NAME)
 
-	return nil
+	return lexInitial
 }
 
-func lexForm(l *scanner) stateFn {
+func lexInitial(l *scanner) stateFn {
 	r := l.next()
 
 	if r == -1 {
@@ -39,8 +39,21 @@ func lexForm(l *scanner) stateFn {
 		return lexName
 	}
 
+	if unicode.IsSpace(r) {
+		l.ignore()
+		return lexInitial
+	}
+
+	if r == '(' {
+		l.emit(tokens.LPAREN)
+		return lexInitial
+	}
+
+	if r == ')' {
+		l.emit(tokens.RPAREN)
+		return lexInitial
+	}
+
 	l.errorf("Unrecognized character: %v", string(r))
 	return nil
 }
-
-var lexInitial = lexForm

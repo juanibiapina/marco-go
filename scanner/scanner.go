@@ -24,6 +24,10 @@ func (l *scanner) next() (r rune) {
 	return r
 }
 
+func (l *scanner) ignore() {
+	l.start = l.pos
+}
+
 func (l *scanner) backup() {
 	l.pos -= l.width
 }
