@@ -53,4 +53,5 @@ func (l *scanner) run() {
 	for state := lexInitial; state != nil; {
 		state = state(l)
 	}
+	close(l.tokens)
 }
