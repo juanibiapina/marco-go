@@ -1,1 +1,2 @@
 - handle Eval errors by returning errors
+- recover from errors in order to show all errors in a file
