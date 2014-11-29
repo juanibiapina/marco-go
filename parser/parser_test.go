@@ -3,11 +3,16 @@ package parser
 import (
 	"github.com/juanibiapina/marco/lang"
 	"github.com/juanibiapina/marco/scanner"
+	"github.com/juanibiapina/marco/tokens"
 	"testing"
 )
 
+func scan(src string) chan tokens.Token {
+	return scanner.Scan([]byte(src))
+}
+
 func TestParseNumbers(t *testing.T) {
-	ast := Parse(scanner.Scan([]byte("1")))
+	ast := Parse(scan("1"))
 
 	v, ok := ast.(lang.Number)
 
