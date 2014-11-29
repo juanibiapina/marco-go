@@ -10,7 +10,3 @@ type Number struct {
 type Name struct {
 	Value string
 }
-
-type Error struct {
-	Message string
-}
