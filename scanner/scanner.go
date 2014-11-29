@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"github.com/juanibiapina/marco/tokens"
+	"log"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -58,6 +59,10 @@ func lexName(l *scanner) stateFn {
 	return nil
 }
 
+func (l *scanner) errorf(format string, args ...interface{}) {
+	log.Fatalf(format, args) // print line and column information
+}
+
 func lexForm(l *scanner) stateFn {
 	r := l.next()
 
@@ -71,6 +76,7 @@ func lexForm(l *scanner) stateFn {
 		return lexName
 	}
 
+	l.errorf("Unrecognized character: %v", string(r))
 	return nil
 }
 
