@@ -19,8 +19,5 @@ func Eval(src []byte) lang.Expr {
 }
 
 func EvalString(src string) lang.Expr {
-	tokens := scanner.Scan(makeSourceString(src))
-	ast := parser.Parse(tokens)
-	expr := interpreter.Eval(ast)
-	return expr
+	return Eval(makeSourceString(src))
 }
