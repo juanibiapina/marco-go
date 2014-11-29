@@ -35,7 +35,7 @@ var numbersTests = []struct {
 
 func TestScanNumbers(t *testing.T) {
 	for _, tt := range numbersTests {
-		c := Scan(tt.value)
+		c := Scan([]byte(tt.value))
 		assertNextToken(t, c, tt.typ, tt.value)
 	}
 }

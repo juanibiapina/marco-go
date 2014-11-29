@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	result := interpreter.Eval(parser.Parse(scanner.Scan("1")))
+	result := interpreter.Eval(parser.Parse(scanner.Scan([]byte("1"))))
 
 	fmt.Println(result)
 }

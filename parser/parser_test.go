@@ -7,7 +7,7 @@ import (
 )
 
 func TestParseNumbers(t *testing.T) {
-	ast := Parse(scanner.Scan("1"))
+	ast := Parse(scanner.Scan([]byte("1")))
 
 	v, ok := ast.(lang.Number)
 

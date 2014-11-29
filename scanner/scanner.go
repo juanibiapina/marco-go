@@ -7,7 +7,7 @@ import (
 )
 
 type scanner struct {
-	input  string
+	input  []byte
 	tokens chan tokens.Token
 	start  int
 	pos    int
@@ -17,7 +17,7 @@ type scanner struct {
 type stateFn func(*scanner) stateFn
 
 func (l *scanner) next() (r rune) {
-	r, l.width = utf8.DecodeRuneInString(l.input[l.pos:])
+	r, l.width = utf8.DecodeRune(l.input[l.pos:])
 	l.pos += l.width
 	return r
 }
@@ -27,7 +27,7 @@ func (l *scanner) backup() {
 }
 
 func (l *scanner) emit(typ tokens.TokenType) {
-	l.tokens <- tokens.New(typ, l.input[l.start:l.pos])
+	l.tokens <- tokens.New(typ, string(l.input[l.start:l.pos]))
 	l.start = l.pos
 }
 
@@ -53,7 +53,7 @@ func (l *scanner) run() {
 	}
 }
 
-func Scan(input string) chan tokens.Token {
+func Scan(input []byte) chan tokens.Token {
 	scanner := &scanner{
 		input:  input,
 		tokens: make(chan tokens.Token),
