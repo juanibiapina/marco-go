@@ -16,6 +16,8 @@ func Eval(expr lang.Expr, env *lang.Env) lang.Expr {
 		return result
 	case lang.Number:
 		return expr
+	case lang.Symbol:
+		return expr
 	case lang.Name:
 		return env.Lookup(expr)
 	case lang.Nil:

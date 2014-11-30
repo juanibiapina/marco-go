@@ -21,12 +21,23 @@ func lexName(l *scanner) stateFn {
 	return lexInitial
 }
 
+func lexSymbol(l *scanner) stateFn {
+	l.acceptRunFunc(unicode.IsLetter)
+	l.emit(tokens.SYMBOL)
+
+	return lexInitial
+}
+
 func lexInitial(l *scanner) stateFn {
 	r := l.next()
 
 	if r == -1 {
 		l.emit(tokens.EOF)
 		return nil
+	}
+
+	if r == ':' {
+		return lexSymbol
 	}
 
 	if unicode.IsDigit(r) {

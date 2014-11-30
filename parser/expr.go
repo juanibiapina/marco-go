@@ -20,6 +20,8 @@ func (p *parser) parseForm() lang.Expr {
 	switch p.currentToken.Typ {
 	case tokens.NUMBER:
 		return p.parseNumber()
+	case tokens.SYMBOL:
+		return p.parseSymbol()
 	case tokens.NAME:
 		return p.parseName()
 	case tokens.LBRACKET:
@@ -44,6 +46,12 @@ func (p *parser) parseList() lang.Expr {
 
 func (p *parser) parseName() lang.Expr {
 	result := lang.Name{p.currentToken.Value}
+	p.next()
+	return result
+}
+
+func (p *parser) parseSymbol() lang.Expr {
+	result := lang.MakeSymbol(p.currentToken.Value)
 	p.next()
 	return result
 }

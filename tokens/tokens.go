@@ -11,6 +11,7 @@ const (
 	NONE TokenType = iota
 	NUMBER
 	NAME
+	SYMBOL
 	EOF
 	LPAREN
 	RPAREN
@@ -26,6 +27,7 @@ var typeNames = []string{
 	"TOKEN_NONE",
 	"TOKEN_NUMBER",
 	"TOKEN_NAME",
+	"TOKEN_SYMBOL",
 	"TOKEN_EOF",
 	"TOKEN_LPAREN",
 	"TOKEN_RPAREN",
