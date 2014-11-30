@@ -1,7 +1,6 @@
 package marco
 
 import (
-	"github.com/juanibiapina/marco/interpreter"
 	"github.com/juanibiapina/marco/lang"
 	"github.com/juanibiapina/marco/parser"
 	"github.com/juanibiapina/marco/scanner"
@@ -23,7 +22,7 @@ func convert(src interface{}) []byte {
 func eval(src []byte) lang.Expr {
 	tokens := scanner.Scan(src)
 	ast := parser.Parse(tokens)
-	expr := interpreter.Eval(ast, lang.MakeEnv())
+	expr := lang.Eval(ast, lang.MakeEnv())
 	return expr
 }
 
