@@ -59,3 +59,10 @@ func TestScanList(t *testing.T) {
 	assertNextToken(t, c, tokens.NUMBER, "3")
 	assertNextToken(t, c, tokens.RBRACKET, "]")
 }
+
+func TestScanMultiLine(t *testing.T) {
+	c := Scan([]byte("1\n\n2"))
+
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.NUMBER, "2")
+}
