@@ -1,3 +1,5 @@
+MARCOTESTS := $(wildcard ../marco-tests/**/*.mrc)
+
 default: test-marco
 
 test:
@@ -6,10 +8,12 @@ test:
 build: test
 	go build -o bin/marco cmd/marco/main.go
 
-test-marco: build
-	./bin/marco ../marco-tests/syntax/list.mrc
+$(MARCOTESTS):
+	@./bin/marco $@ > /dev/null
+
+test-marco: build $(MARCOTESTS)
 
 clean:
 	rm -rf bin
 
-.PHONY: build test default clean test-marco
+.PHONY: build test default clean test-marco $(MARCOTESTS)
