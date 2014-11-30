@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/juanibiapina/marco"
+	"github.com/juanibiapina/marco/runtime"
 	"io/ioutil"
 	"log"
 	"os"
