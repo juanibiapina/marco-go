@@ -35,7 +35,7 @@ func (p *parser) parseList() lang.Expr {
 	var list []lang.Expr
 
 	for p.currentToken.Typ != tokens.RBRACKET {
-		expr := p.parseNumber()
+		expr := p.parseForm()
 		list = append(list, expr)
 	}
 	p.accept(tokens.RBRACKET)
