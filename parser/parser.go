@@ -31,10 +31,23 @@ func (p *parser) parseForm() lang.Expr {
 		return p.parseNumber()
 	case tokens.NAME:
 		return p.parseName()
+	case tokens.LBRACKET:
+		p.next()
+		return p.parseList()
 	default:
 		p.errorf("Parse error: unexpected token '%v'", p.currentToken)
 		return nil
 	}
+}
+
+func (p *parser) parseList() lang.Expr {
+	var list []lang.Expr
+
+	for p.currentToken.Typ != tokens.RBRACKET {
+		expr := p.parseNumber()
+		list = append(list, expr)
+	}
+	return lang.MakeList(list)
 }
 
 func (p *parser) parseName() lang.Expr {
@@ -46,6 +59,7 @@ func (p *parser) parseNumber() lang.Expr {
 	if err != nil {
 		p.errorf("Error parsing number '%v': %s", p.currentToken.Value, err)
 	}
+	p.next()
 	return lang.Number{v}
 }
 
