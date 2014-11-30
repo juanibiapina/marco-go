@@ -6,6 +6,16 @@ import (
 	"strconv"
 )
 
+func (p *parser) parseModule() lang.Expr {
+	var forms []lang.Expr
+
+	for p.currentToken.Typ != tokens.EOF {
+		forms = append(forms, p.parseForm())
+	}
+
+	return lang.MakeModule(forms)
+}
+
 func (p *parser) parseForm() lang.Expr {
 	switch p.currentToken.Typ {
 	case tokens.NUMBER:
@@ -28,11 +38,14 @@ func (p *parser) parseList() lang.Expr {
 		expr := p.parseNumber()
 		list = append(list, expr)
 	}
+	p.accept(tokens.RBRACKET)
 	return lang.MakeList(list)
 }
 
 func (p *parser) parseName() lang.Expr {
-	return lang.Name{p.currentToken.Value}
+	result := lang.Name{p.currentToken.Value}
+	p.next()
+	return result
 }
 
 func (p *parser) parseNumber() lang.Expr {

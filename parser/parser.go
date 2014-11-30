@@ -11,6 +11,14 @@ type parser struct {
 	currentToken tokens.Token
 }
 
+func (p *parser) accept(typ tokens.TokenType) {
+	if p.currentToken.Typ != typ {
+		p.errorf("Parse error: unexpected token '%v', expected '%v'", p.currentToken, typ)
+	}
+
+	p.next()
+}
+
 func (p *parser) next() {
 	p.currentToken = <-p.tokens
 }

@@ -7,6 +7,13 @@ import (
 
 func Eval(expr lang.Expr, env *lang.Env) lang.Expr {
 	switch expr := expr.(type) {
+	case lang.Module:
+		forms := lang.ModuleToSlice(expr)
+		var result lang.Expr = lang.Nil{}
+		for _, form := range forms {
+			result = Eval(form, env)
+		}
+		return result
 	case lang.Number:
 		return expr
 	case lang.Name:

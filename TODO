@@ -1,2 +1,3 @@
-- handle Eval errors by returning errors
-- recover from errors in order to show all errors in a file
+- recover from errors in order to show all errors in a file instead of just the first one
+- IDEA: move evaluation of each expression to its type and add Eval to the Expr interface
+- Add print function for Expr

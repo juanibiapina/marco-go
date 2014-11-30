@@ -14,25 +14,83 @@ func scan(src string) chan tokens.Token {
 func TestParseNumbers(t *testing.T) {
 	ast := Parse(scan("1"))
 
-	v, ok := ast.(lang.Number)
+	module, ok := ast.(lang.Module)
 
 	if !ok {
-		t.Error("Expected type Number")
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
 	}
-	if v.Value != 1 {
-		t.Errorf("Expected '%v' but got '%v'", 1, v.Value)
+
+	expected := lang.Module{lang.Pair{lang.Number{1}, lang.Nil{}}}
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
 	}
 }
 
 func TestParseNames(t *testing.T) {
 	ast := Parse(scan("def"))
 
-	v, ok := ast.(lang.Name)
+	module, ok := ast.(lang.Module)
 
 	if !ok {
-		t.Error("Expected type Name")
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
 	}
-	if v.Value != "def" {
-		t.Errorf("Expected '%v' but got '%v'", "def", v.Value)
+
+	expected := lang.Module{lang.Pair{lang.Name{"def"}, lang.Nil{}}}
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
+	}
+}
+
+func TestParseTwoNumbers(t *testing.T) {
+	ast := Parse(scan("1\n\n2"))
+
+	module, ok := ast.(lang.Module)
+
+	if !ok {
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
+	}
+
+	expected := lang.Module{lang.Pair{lang.Number{1}, lang.Pair{lang.Number{2}, lang.Nil{}}}}
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
+	}
+}
+
+func TestParseTwoLists(t *testing.T) {
+	ast := Parse(scan("[1 2]\n\n[3 4]"))
+
+	module, ok := ast.(lang.Module)
+
+	if !ok {
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
+	}
+
+	expected := lang.Module{
+		lang.Pair{
+			lang.Pair{
+				lang.Number{1},
+				lang.Pair{
+					lang.Number{2},
+					lang.Nil{},
+				},
+			},
+			lang.Pair{
+				lang.Pair{
+					lang.Number{3},
+					lang.Pair{
+						lang.Number{4},
+						lang.Nil{},
+					},
+				},
+				lang.Nil{},
+			},
+		},
+	}
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
 	}
 }

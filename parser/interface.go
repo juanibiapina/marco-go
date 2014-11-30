@@ -12,5 +12,5 @@ func Parse(tokens chan tokens.Token) lang.Expr {
 
 	p.init()
 
-	return p.parseForm()
+	return p.parseModule()
 }

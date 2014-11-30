@@ -30,3 +30,12 @@ func TestEvalName(t *testing.T) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }
+
+func TestEvalModule(t *testing.T) {
+	result := Eval(lang.Module{lang.Pair{lang.Number{42}, lang.Nil{}}}, env)
+
+	expected := lang.Number{42}
+	if result != expected {
+		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
+	}
+}
