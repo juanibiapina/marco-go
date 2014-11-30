@@ -54,6 +54,16 @@ func lexInitial(l *scanner) stateFn {
 		return lexInitial
 	}
 
+	if r == '[' {
+		l.emit(tokens.LBRACKET)
+		return lexInitial
+	}
+
+	if r == ']' {
+		l.emit(tokens.RBRACKET)
+		return lexInitial
+	}
+
 	l.errorf("Unrecognized character: %v", string(r))
 	return nil
 }

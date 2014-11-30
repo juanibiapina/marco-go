@@ -14,6 +14,8 @@ const (
 	EOF
 	LPAREN
 	RPAREN
+	LBRACKET
+	RBRACKET
 )
 
 func New(typ TokenType, value string) Token {
@@ -27,6 +29,8 @@ var typeNames = []string{
 	"TOKEN_EOF",
 	"TOKEN_LPAREN",
 	"TOKEN_RPAREN",
+	"TOKEN_LBRACKET",
+	"TOKEN_RBRACKET",
 }
 
 func (typ TokenType) String() string {

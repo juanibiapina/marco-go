@@ -49,3 +49,13 @@ func TestScanApplication(t *testing.T) {
 	assertNextToken(t, c, tokens.NAME, "b")
 	assertNextToken(t, c, tokens.RPAREN, ")")
 }
+
+func TestScanList(t *testing.T) {
+	c := Scan([]byte("[1 2 3]"))
+
+	assertNextToken(t, c, tokens.LBRACKET, "[")
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.NUMBER, "2")
+	assertNextToken(t, c, tokens.NUMBER, "3")
+	assertNextToken(t, c, tokens.RBRACKET, "]")
+}
