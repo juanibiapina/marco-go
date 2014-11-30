@@ -1,4 +1,6 @@
+default: test
+
 test:
 	go test ./...
 
-.PHONY: test
+.PHONY: test default
