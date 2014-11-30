@@ -9,7 +9,7 @@ func Eval(expr lang.Expr, env *lang.Env) lang.Expr {
 	switch expr := expr.(type) {
 	case lang.Module:
 		forms := lang.ModuleToSlice(expr)
-		var result lang.Expr = lang.Nil{}
+		var result lang.Expr = lang.MakeNil()
 		for _, form := range forms {
 			result = Eval(form, env)
 		}

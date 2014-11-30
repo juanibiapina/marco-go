@@ -7,7 +7,7 @@ import (
 
 func TestEvalString(t *testing.T) {
 	expr := Eval("1")
-	expected := lang.Number{1}
+	expected := lang.MakeNumber(1)
 
 	if expr != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, expr)
@@ -16,7 +16,7 @@ func TestEvalString(t *testing.T) {
 
 func TestEval(t *testing.T) {
 	expr := Eval([]byte("1"))
-	expected := lang.Number{1}
+	expected := lang.MakeNumber(1)
 
 	if expr != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, expr)

@@ -12,29 +12,29 @@ func init() {
 }
 
 func TestEvalNumber(t *testing.T) {
-	result := Eval(lang.Number{1}, env)
+	result := Eval(lang.MakeNumber(1), env)
 
-	expected := lang.Number{1}
+	expected := lang.MakeNumber(1)
 	if result != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }
 
 func TestEvalName(t *testing.T) {
-	env.Extend("def", lang.Number{42})
+	env.Extend("def", lang.MakeNumber(42))
 
 	result := Eval(lang.Name{"def"}, env)
 
-	expected := lang.Number{42}
+	expected := lang.MakeNumber(42)
 	if result != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }
 
 func TestEvalModule(t *testing.T) {
-	result := Eval(lang.Module{lang.Pair{lang.Number{42}, lang.Nil{}}}, env)
+	result := Eval(lang.Module{lang.Pair{lang.MakeNumber(42), lang.MakeNil()}}, env)
 
-	expected := lang.Number{42}
+	expected := lang.MakeNumber(42)
 	if result != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}

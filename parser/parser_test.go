@@ -20,7 +20,7 @@ func TestParseNumbers(t *testing.T) {
 		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
 	}
 
-	expected := lang.Module{lang.Pair{lang.Number{1}, lang.Nil{}}}
+	expected := lang.Module{lang.Pair{lang.MakeNumber(1), lang.MakeNil()}}
 
 	if module != expected {
 		t.Errorf("Expected '%v' but got '%v'", expected, module)
@@ -36,7 +36,7 @@ func TestParseNames(t *testing.T) {
 		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
 	}
 
-	expected := lang.Module{lang.Pair{lang.Name{"def"}, lang.Nil{}}}
+	expected := lang.Module{lang.Pair{lang.Name{"def"}, lang.MakeNil()}}
 
 	if module != expected {
 		t.Errorf("Expected '%v' but got '%v'", expected, module)
@@ -52,7 +52,7 @@ func TestParseTwoNumbers(t *testing.T) {
 		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
 	}
 
-	expected := lang.Module{lang.Pair{lang.Number{1}, lang.Pair{lang.Number{2}, lang.Nil{}}}}
+	expected := lang.Module{lang.Pair{lang.MakeNumber(1), lang.Pair{lang.MakeNumber(2), lang.MakeNil()}}}
 
 	if module != expected {
 		t.Errorf("Expected '%v' but got '%v'", expected, module)
@@ -71,21 +71,21 @@ func TestParseTwoLists(t *testing.T) {
 	expected := lang.Module{
 		lang.Pair{
 			lang.Pair{
-				lang.Number{1},
+				lang.MakeNumber(1),
 				lang.Pair{
-					lang.Number{2},
-					lang.Nil{},
+					lang.MakeNumber(2),
+					lang.MakeNil(),
 				},
 			},
 			lang.Pair{
 				lang.Pair{
-					lang.Number{3},
+					lang.MakeNumber(3),
 					lang.Pair{
-						lang.Number{4},
-						lang.Nil{},
+						lang.MakeNumber(4),
+						lang.MakeNil(),
 					},
 				},
-				lang.Nil{},
+				lang.MakeNil(),
 			},
 		},
 	}

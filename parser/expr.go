@@ -62,5 +62,5 @@ func (p *parser) parseNumber() lang.Expr {
 		p.errorf("Error parsing number '%v': %s", p.currentToken.Value, err)
 	}
 	p.next()
-	return lang.Number{v}
+	return lang.MakeNumber(v)
 }
