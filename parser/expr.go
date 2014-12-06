@@ -24,6 +24,8 @@ func (p *parser) parseForm() lang.Expr {
 		return p.parseSymbol()
 	case tokens.NAME:
 		return p.parseName()
+	case tokens.STRING:
+		return p.parseString()
 	case tokens.LBRACKET:
 		p.next()
 		return p.parseList()
@@ -60,6 +62,12 @@ func (p *parser) parseList() lang.Expr {
 
 func (p *parser) parseName() lang.Expr {
 	result := lang.Name{p.currentToken.Value}
+	p.next()
+	return result
+}
+
+func (p *parser) parseString() lang.Expr {
+	result := lang.String{p.currentToken.Value}
 	p.next()
 	return result
 }

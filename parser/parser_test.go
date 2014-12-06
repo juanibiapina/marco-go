@@ -43,6 +43,29 @@ func TestParseNames(t *testing.T) {
 	}
 }
 
+func TestParseString(t *testing.T) {
+	s := scan("\"stuff here\"")
+
+	ast := Parse(s)
+
+	module, ok := ast.(lang.Module)
+
+	if !ok {
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
+	}
+
+	expected := lang.Module{
+		lang.Pair{
+			lang.String{"stuff here"},
+			lang.MakeNil(),
+		},
+	}
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
+	}
+}
+
 func TestParseTwoNumbers(t *testing.T) {
 	ast := Parse(scan("1\n\n2"))
 
