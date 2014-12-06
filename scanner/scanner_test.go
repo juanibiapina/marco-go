@@ -25,27 +25,23 @@ func assertNextToken(t *testing.T, c chan tokens.Token, typ tokens.TokenType, va
 }
 
 var tokenTests = []struct {
-	value string
+	input string
 	typ   tokens.TokenType
+	value string
 }{
-	{"1", tokens.NUMBER},
-	{"2", tokens.NUMBER},
-	{"823", tokens.NUMBER},
-	{"def", tokens.NAME},
-	{"", tokens.EOF},
+	{"1", tokens.NUMBER, "1"},
+	{"2", tokens.NUMBER, "2"},
+	{"823", tokens.NUMBER, "823"},
+	{"def", tokens.NAME, "def"},
+	{":asdf", tokens.SYMBOL, "asdf"},
+	{"", tokens.EOF, ""},
 }
 
 func TestScanTokens(t *testing.T) {
 	for _, tt := range tokenTests {
-		c := Scan([]byte(tt.value))
+		c := Scan([]byte(tt.input))
 		assertNextToken(t, c, tt.typ, tt.value)
 	}
-}
-
-func TestScanSymbol(t *testing.T) {
-	c := Scan([]byte(":asdf"))
-
-	assertNextToken(t, c, tokens.SYMBOL, "asdf")
 }
 
 func TestScanList(t *testing.T) {
