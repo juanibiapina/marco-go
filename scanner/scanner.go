@@ -37,6 +37,15 @@ func (l *scanner) emit(typ tokens.TokenType) {
 	l.start = l.pos
 }
 
+func (l *scanner) accept(r rune) {
+	c := l.next()
+	if c == r {
+		return
+	}
+
+	l.backup()
+}
+
 func (l *scanner) acceptRun(values string) {
 	for strings.IndexRune(values, l.next()) >= 0 {
 	}
@@ -49,8 +58,8 @@ func (l *scanner) acceptRunFunc(f func(rune) bool) {
 	l.backup()
 }
 
-func (l *scanner) acceptUntil(values string) {
-	for strings.IndexRune(values, l.next()) < 0 {
+func (l *scanner) acceptUntil(r rune) {
+	for l.next() != r {
 	}
 	l.backup()
 }

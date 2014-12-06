@@ -31,9 +31,9 @@ func lexSymbol(l *scanner) stateFn {
 
 func lexString(l *scanner) stateFn {
 	l.ignore()
-	l.acceptUntil("\"")
+	l.acceptUntil('"')
 	l.emit(tokens.STRING)
-	l.next()
+	l.accept('"')
 	l.ignore()
 
 	return lexInitial
