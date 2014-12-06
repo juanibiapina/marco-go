@@ -35,6 +35,9 @@ var tokenTests = []struct {
 	{"def", tokens.NAME, "def"},
 	{":asdf", tokens.SYMBOL, "asdf"},
 	{"\"\"", tokens.STRING, ""},
+	{"\"a\"", tokens.STRING, "a"},
+	{"\"a b\"", tokens.STRING, "a b"},
+	{"\"abc 12 ! <>?\"", tokens.STRING, "abc 12 ! <>?"},
 	{"", tokens.EOF, ""},
 }
 
