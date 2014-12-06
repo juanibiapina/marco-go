@@ -17,6 +17,8 @@ func Eval(expr Expr, env *Env) Expr {
 		return expr
 	case Symbol:
 		return expr
+	case String:
+		return expr
 	case Name:
 		return env.Lookup(expr)
 	case Nil:

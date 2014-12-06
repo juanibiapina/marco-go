@@ -38,3 +38,12 @@ func TestEvalModule(t *testing.T) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }
+
+func TestEvalString(t *testing.T) {
+	result := Eval(MakeString("some string"), env)
+
+	expected := MakeString("some string")
+	if result != expected {
+		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
+	}
+}
