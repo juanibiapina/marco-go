@@ -94,3 +94,21 @@ func TestParseTwoLists(t *testing.T) {
 		t.Errorf("Expected '%v' but got '%v'", expected, module)
 	}
 }
+
+func TestParseApplication(t *testing.T) {
+	ast := Parse(scan("(a b c)"))
+
+	module, ok := ast.(lang.Module)
+
+	if !ok {
+		t.Error("Wrong type, expected 'lang.Module', got '%T'", ast)
+	}
+
+	expected := lang.MakeSingleExprModule(lang.Application{
+		lang.MakeList([]lang.Expr{lang.MakeName("a"), lang.MakeName("b"), lang.MakeName("c")}),
+	})
+
+	if module != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, module)
+	}
+}

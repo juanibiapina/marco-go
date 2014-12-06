@@ -27,10 +27,24 @@ func (p *parser) parseForm() lang.Expr {
 	case tokens.LBRACKET:
 		p.next()
 		return p.parseList()
+	case tokens.LPAREN:
+		p.next()
+		return p.parseApplication()
 	default:
 		p.errorf("Parse error: unexpected token '%v'", p.currentToken)
 		return nil
 	}
+}
+
+func (p *parser) parseApplication() lang.Expr {
+	var list []lang.Expr
+
+	for p.currentToken.Typ != tokens.RPAREN {
+		expr := p.parseForm()
+		list = append(list, expr)
+	}
+	p.accept(tokens.RPAREN)
+	return lang.Application{lang.MakeList(list)}
 }
 
 func (p *parser) parseList() lang.Expr {
