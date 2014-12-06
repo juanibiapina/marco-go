@@ -48,6 +48,12 @@ func TestScanTokens(t *testing.T) {
 	}
 }
 
+func TestScanAfterString(t *testing.T) {
+	c := Scan([]byte("\"abc d\" 1"))
+	assertNextToken(t, c, tokens.STRING, "abc d")
+	assertNextToken(t, c, tokens.NUMBER, "1")
+}
+
 func TestScanList(t *testing.T) {
 	c := Scan([]byte("[1 2 3]"))
 
