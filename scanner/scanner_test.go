@@ -34,6 +34,7 @@ var tokenTests = []struct {
 	{"823", tokens.NUMBER, "823"},
 	{"def", tokens.NAME, "def"},
 	{":asdf", tokens.SYMBOL, "asdf"},
+	{"\"\"", tokens.STRING, ""},
 	{"", tokens.EOF, ""},
 }
 

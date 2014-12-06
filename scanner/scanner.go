@@ -49,6 +49,12 @@ func (l *scanner) acceptRunFunc(f func(rune) bool) {
 	l.backup()
 }
 
+func (l *scanner) acceptUntil(values string) {
+	for strings.IndexRune(values, l.next()) < 0 {
+	}
+	l.backup()
+}
+
 func (l *scanner) errorf(format string, args ...interface{}) {
 	log.Fatalf(format, args) // print line and column information
 }

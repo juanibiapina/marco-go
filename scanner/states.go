@@ -29,6 +29,14 @@ func lexSymbol(l *scanner) stateFn {
 	return lexInitial
 }
 
+func lexString(l *scanner) stateFn {
+	l.ignore()
+	l.acceptUntil("\"")
+	l.emit(tokens.STRING)
+
+	return lexInitial
+}
+
 func lexInitial(l *scanner) stateFn {
 	r := l.next()
 
@@ -39,6 +47,10 @@ func lexInitial(l *scanner) stateFn {
 
 	if r == ':' {
 		return lexSymbol
+	}
+
+	if r == '"' {
+		return lexString
 	}
 
 	if unicode.IsDigit(r) {
