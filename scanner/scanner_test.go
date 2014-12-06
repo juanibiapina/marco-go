@@ -42,6 +42,12 @@ func TestScanTokens(t *testing.T) {
 	}
 }
 
+func TestScanSymbol(t *testing.T) {
+	c := Scan([]byte(":asdf"))
+
+	assertNextToken(t, c, tokens.SYMBOL, "asdf")
+}
+
 func TestScanList(t *testing.T) {
 	c := Scan([]byte("[1 2 3]"))
 
@@ -64,7 +70,7 @@ func TestScanApplication(t *testing.T) {
 
 	assertNextToken(t, c, tokens.LPAREN, "(")
 	assertNextToken(t, c, tokens.NAME, "def")
-	assertNextToken(t, c, tokens.SYMBOL, ":a")
+	assertNextToken(t, c, tokens.SYMBOL, "a")
 	assertNextToken(t, c, tokens.NUMBER, "1")
 	assertNextToken(t, c, tokens.RPAREN, ")")
 }

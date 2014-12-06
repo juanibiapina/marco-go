@@ -22,6 +22,7 @@ func lexName(l *scanner) stateFn {
 }
 
 func lexSymbol(l *scanner) stateFn {
+	l.ignore()
 	l.acceptRunFunc(unicode.IsLetter)
 	l.emit(tokens.SYMBOL)
 
