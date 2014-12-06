@@ -42,14 +42,6 @@ func TestScanTokens(t *testing.T) {
 	}
 }
 
-func TestScanApplication(t *testing.T) {
-	c := Scan([]byte("(a b)"))
-	assertNextToken(t, c, tokens.LPAREN, "(")
-	assertNextToken(t, c, tokens.NAME, "a")
-	assertNextToken(t, c, tokens.NAME, "b")
-	assertNextToken(t, c, tokens.RPAREN, ")")
-}
-
 func TestScanList(t *testing.T) {
 	c := Scan([]byte("[1 2 3]"))
 
@@ -65,4 +57,14 @@ func TestScanMultiLine(t *testing.T) {
 
 	assertNextToken(t, c, tokens.NUMBER, "1")
 	assertNextToken(t, c, tokens.NUMBER, "2")
+}
+
+func TestScanApplication(t *testing.T) {
+	c := Scan([]byte("(def :a 1)"))
+
+	assertNextToken(t, c, tokens.LPAREN, "(")
+	assertNextToken(t, c, tokens.NAME, "def")
+	assertNextToken(t, c, tokens.SYMBOL, ":a")
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.RPAREN, ")")
 }
