@@ -33,6 +33,8 @@ func lexString(l *scanner) stateFn {
 	l.ignore()
 	l.acceptUntil("\"")
 	l.emit(tokens.STRING)
+	l.next()
+	l.ignore()
 
 	return lexInitial
 }
