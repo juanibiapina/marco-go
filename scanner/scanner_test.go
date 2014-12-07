@@ -66,6 +66,23 @@ func TestScanList(t *testing.T) {
 	assertNextToken(t, c, tokens.RBRACKET, "]")
 }
 
+func TestScanBlockSimple(t *testing.T) {
+	c := Scan([]byte("{1}"))
+
+	assertNextToken(t, c, tokens.LBRACER, "{")
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.RBRACER, "}")
+}
+
+func TestScanBlockMultiple(t *testing.T) {
+	c := Scan([]byte("{\n1\n2\n}"))
+
+	assertNextToken(t, c, tokens.LBRACER, "{")
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.NUMBER, "2")
+	assertNextToken(t, c, tokens.RBRACER, "}")
+}
+
 func TestScanMultiLine(t *testing.T) {
 	c := Scan([]byte("1\n\n2"))
 

@@ -20,6 +20,8 @@ const (
 	RPAREN
 	LBRACKET
 	RBRACKET
+	LBRACER
+	RBRACER
 )
 
 func New(typ TokenType, value string) Token {
@@ -39,6 +41,8 @@ var typeNames = []string{
 	"TOKEN_RPAREN",
 	"TOKEN_LBRACKET",
 	"TOKEN_RBRACKET",
+	"TOKEN_LBRACER",
+	"TOKEN_RBRACER",
 }
 
 func (typ TokenType) String() string {

@@ -114,6 +114,16 @@ func scanInitial(l *scanner) stateFn {
 		return scanInitial
 	}
 
+	if r == '{' {
+		l.emit(tokens.LBRACER)
+		return scanInitial
+	}
+
+	if r == '}' {
+		l.emit(tokens.RBRACER)
+		return scanInitial
+	}
+
 	l.errorf("Unrecognized character: %v", string(r))
 	return nil
 }
