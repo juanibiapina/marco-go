@@ -61,9 +61,14 @@ func (p *parser) parseList() lang.Expr {
 }
 
 func (p *parser) parseName() lang.Expr {
-	result := lang.Name{p.currentToken.Value}
+	value := p.currentToken.Value
 	p.next()
-	return result
+	if p.currentToken.Typ == tokens.DOT {
+		p.next()
+		return lang.MakeNestedName(value, p.parseName())
+	} else {
+		return lang.MakeName(value)
+	}
 }
 
 func (p *parser) parseString() lang.Expr {

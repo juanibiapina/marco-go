@@ -22,7 +22,7 @@ func TestEvalNumber(t *testing.T) {
 func TestEvalName(t *testing.T) {
 	env.Extend("def", MakeNumber(42))
 
-	result := Eval(Name{"def"}, env)
+	result := Eval(MakeName("def"), env)
 
 	expected := MakeNumber(42)
 	if result != expected {

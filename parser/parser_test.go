@@ -24,7 +24,7 @@ func TestParseNumbers(t *testing.T) {
 func TestParseNames(t *testing.T) {
 	block := Parse(scan("def"))
 
-	expected := lang.Block{lang.Pair{lang.Name{"def"}, lang.MakeNil()}, nil}
+	expected := lang.Block{lang.Pair{lang.MakeName("def"), lang.MakeNil()}, nil}
 
 	if block != expected {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
@@ -94,6 +94,16 @@ func TestParseApplication(t *testing.T) {
 	expected := lang.MakeSingleExprBlock(lang.Application{
 		lang.SliceToList([]lang.Expr{lang.MakeName("a"), lang.MakeName("b"), lang.MakeName("c")}),
 	})
+
+	if block != expected {
+		t.Errorf("Expected '%v' but got '%v'", expected, block)
+	}
+}
+
+func TestParseNestedNames(t *testing.T) {
+	block := Parse(scan("a.b"))
+
+	expected := lang.MakeSingleExprBlock(lang.MakeNestedName("a", lang.MakeName("b")))
 
 	if block != expected {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
