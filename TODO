@@ -1,4 +1,3 @@
 - recover from errors in order to show all errors in a file instead of just the first one
 - add print function for Expr
 - allow comments inside lists and blocks
-- add modules

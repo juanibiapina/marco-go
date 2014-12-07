@@ -15,7 +15,13 @@ func Eval(expr Expr, env *environment) Expr {
 	case *mstring:
 		return expr
 	case *name:
-		return env.Lookup(expr.Value)
+		result := env.Lookup(expr.Value)
+		nextLevel := expr.Nested
+		if nextLevel != nil {
+			result = result.(*module).Lookup(nextLevel.(*name).Value)
+			nextLevel = nextLevel.(*name).Nested
+		}
+		return result
 	case *mnil:
 		return expr
 	case *pair:

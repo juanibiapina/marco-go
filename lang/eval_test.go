@@ -31,6 +31,22 @@ func TestEvalName(t *testing.T) {
 	}
 }
 
+func TestEvalNestedName(t *testing.T) {
+	moduleEnv := MakeEnv()
+	moduleEnv.Extend("b", MakeNumber(1))
+	moduleEnv.Export("b")
+
+	env.Extend("a", MakeModule(moduleEnv))
+
+	result := Eval(MakeNestedName("a", MakeName("b")), env)
+
+	expected := MakeNumber(1)
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
+	}
+}
+
 func TestEvalBlock(t *testing.T) {
 	result := Eval(MakeSingleExprBlock(MakeNumber(42)), env)
 
