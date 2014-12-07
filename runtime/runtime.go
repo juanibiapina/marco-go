@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func convert(src interface{}) []byte {
+func convertInput(src interface{}) []byte {
 	switch src := src.(type) {
 	case []byte:
 		return src
@@ -19,13 +19,15 @@ func convert(src interface{}) []byte {
 	}
 }
 
-func eval(src []byte) lang.Expr {
+func run(src []byte) lang.Expr {
 	tokens := scanner.Scan(src)
-	ast := parser.Parse(tokens)
-	expr := lang.Eval(ast, lang.MakeEnv())
-	return expr
+	blockAst := parser.Parse(tokens)
+	env := lang.MakeEnv()
+	expr := lang.Eval(blockAst, env)
+	block := lang.ToBlock(expr)
+	return block.Invoke()
 }
 
-func Eval(src interface{}) lang.Expr {
-	return eval(convert(src))
+func Run(src interface{}) lang.Expr {
+	return run(convertInput(src))
 }

@@ -5,12 +5,12 @@ import (
 	"github.com/juanibiapina/marco/tokens"
 )
 
-func Parse(tokens chan tokens.Token) lang.Expr {
+func Parse(tokens chan tokens.Token) lang.Block {
 	p := &parser{
 		tokens: tokens,
 	}
 
 	p.init()
 
-	return p.parseModule()
+	return p.parseTopLevel()
 }

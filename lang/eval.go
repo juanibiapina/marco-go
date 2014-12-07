@@ -6,13 +6,8 @@ import (
 
 func Eval(expr Expr, env *Env) Expr {
 	switch expr := expr.(type) {
-	case Module:
-		forms := ModuleToSlice(expr)
-		var result Expr = MakeNil()
-		for _, form := range forms {
-			result = Eval(form, env)
-		}
-		return result
+	case Block:
+		return expr.WithEnv(env)
 	case Number:
 		return expr
 	case Symbol:

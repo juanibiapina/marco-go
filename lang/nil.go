@@ -3,8 +3,10 @@ package lang
 type Nil struct {
 }
 
+var nilSingleton Nil
+
 func MakeNil() Expr {
-	return Nil{}
+	return nilSingleton
 }
 
 func IsNil(e Expr) bool {

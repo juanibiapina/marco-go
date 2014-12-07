@@ -6,14 +6,14 @@ import (
 	"strconv"
 )
 
-func (p *parser) parseModule() lang.Expr {
+func (p *parser) parseTopLevel() lang.Block {
 	var forms []lang.Expr
 
 	for p.currentToken.Typ != tokens.EOF {
 		forms = append(forms, p.parseForm())
 	}
 
-	return lang.MakeModule(forms)
+	return lang.MakeBlock(forms)
 }
 
 func (p *parser) parseForm() lang.Expr {
@@ -46,7 +46,7 @@ func (p *parser) parseApplication() lang.Expr {
 		list = append(list, expr)
 	}
 	p.accept(tokens.RPAREN)
-	return lang.Application{lang.MakeList(list)}
+	return lang.Application{lang.SliceToList(list)}
 }
 
 func (p *parser) parseList() lang.Expr {
@@ -57,7 +57,7 @@ func (p *parser) parseList() lang.Expr {
 		list = append(list, expr)
 	}
 	p.accept(tokens.RBRACKET)
-	return lang.MakeList(list)
+	return lang.SliceToList(list)
 }
 
 func (p *parser) parseName() lang.Expr {

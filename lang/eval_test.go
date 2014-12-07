@@ -30,10 +30,11 @@ func TestEvalName(t *testing.T) {
 	}
 }
 
-func TestEvalModule(t *testing.T) {
-	result := Eval(Module{Pair{MakeNumber(42), MakeNil()}}, env)
+func TestEvalBlock(t *testing.T) {
+	result := Eval(MakeSingleExprBlock(MakeNumber(42)), env)
 
-	expected := MakeNumber(42)
+	expected := Block{MakePair(MakeNumber(42), MakeNil()), env}
+
 	if result != expected {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}

@@ -34,7 +34,7 @@ func main() {
 		log.Fatalf("Error reading file '%v': %v", filename, err)
 	}
 
-	result := marco.Eval(data)
+	result := marco.Run(data)
 
 	fmt.Println(result)
 }
