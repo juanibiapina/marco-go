@@ -15,7 +15,7 @@ func Eval(expr Expr, env *environment) Expr {
 	case *mstring:
 		return expr
 	case *name:
-		return env.Lookup(expr)
+		return env.Lookup(expr.Value)
 	case *mnil:
 		return expr
 	case *pair:

@@ -14,8 +14,8 @@ func MakeEnv() *environment {
 	}
 }
 
-func (env *environment) Lookup(name *name) Expr {
-	value, ok := env.bindings[name.Value]
+func (env *environment) Lookup(name string) Expr {
+	value, ok := env.bindings[name]
 	if !ok {
 		panic(fmt.Sprintf("Binding not found: '%v'", name))
 	}
