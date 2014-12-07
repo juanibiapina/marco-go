@@ -19,5 +19,5 @@ func (env *environment) Extend(name string, expr Expr) {
 }
 
 func (env *environment) String() string {
-	return "TODO"
+	return "Environment"
 }

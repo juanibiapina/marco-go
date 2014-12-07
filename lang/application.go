@@ -8,6 +8,6 @@ func MakeApplication(list Expr) *application {
 	return &application{list}
 }
 
-func (application *application) String() string {
-	return "TODO"
+func (app *application) String() string {
+	return "Application"
 }
