@@ -15,6 +15,7 @@ const (
 	STRING
 	DOT
 	EOF
+	COMMENT
 	LPAREN
 	RPAREN
 	LBRACKET
@@ -33,6 +34,7 @@ var typeNames = []string{
 	"TOKEN_STRING",
 	"TOKEN_DOT",
 	"TOKEN_EOF",
+	"TOKEN_COMMENT",
 	"TOKEN_LPAREN",
 	"TOKEN_RPAREN",
 	"TOKEN_LBRACKET",

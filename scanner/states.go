@@ -29,6 +29,17 @@ func scanSymbol(l *scanner) stateFn {
 	return scanInitial
 }
 
+func scanComment(l *scanner) stateFn {
+	l.ignore() // second '/'
+	r := l.next()
+	for r != '\n' && r != -1 {
+		r = l.next()
+	}
+	l.backup()
+	l.emit(tokens.COMMENT)
+	return scanInitial
+}
+
 func scanString(l *scanner) stateFn {
 	l.ignore()
 	l.acceptUntilRune('"')
@@ -45,6 +56,14 @@ func scanInitial(l *scanner) stateFn {
 	if r == -1 {
 		l.emit(tokens.EOF)
 		return nil
+	}
+
+	if r == '/' {
+		r = l.next()
+		if r == '/' {
+			return scanComment
+		}
+		l.backup()
 	}
 
 	if r == ':' {

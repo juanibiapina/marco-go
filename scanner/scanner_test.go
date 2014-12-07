@@ -88,3 +88,19 @@ func TestScanDot(t *testing.T) {
 
 	assertNextToken(t, c, tokens.DOT, ".")
 }
+
+func TestScanCommentAtEndOfFile(t *testing.T) {
+	c := Scan([]byte("//comment"))
+
+	assertNextToken(t, c, tokens.COMMENT, "comment")
+	assertNextToken(t, c, tokens.EOF, "")
+}
+
+func TestScanCommentBetweenOtherThings(t *testing.T) {
+	c := Scan([]byte("1 // a long comment here\n 2"))
+
+	assertNextToken(t, c, tokens.NUMBER, "1")
+	assertNextToken(t, c, tokens.COMMENT, " a long comment here")
+	assertNextToken(t, c, tokens.NUMBER, "2")
+	assertNextToken(t, c, tokens.EOF, "")
+}
