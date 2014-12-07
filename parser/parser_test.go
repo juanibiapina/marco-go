@@ -99,3 +99,13 @@ func TestParseNestedNames(t *testing.T) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
+
+func TestParseComments(t *testing.T) {
+	block := Parse(scan("a.b // ignored comment"))
+
+	expected := lang.MakeSingleExprBlock(lang.MakeNestedName("a", lang.MakeName("b")))
+
+	if !reflect.DeepEqual(block, expected) {
+		t.Errorf("Expected '%v' but got '%v'", expected, block)
+	}
+}

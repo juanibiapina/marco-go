@@ -10,6 +10,11 @@ func (p *parser) parseTopLevel() lang.Expr {
 	var forms []lang.Expr
 
 	for p.currentToken.Typ != tokens.EOF {
+		if p.currentToken.Typ == tokens.COMMENT {
+			p.next()
+			continue
+		}
+
 		forms = append(forms, p.parseForm())
 	}
 
