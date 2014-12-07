@@ -34,6 +34,9 @@ func (p *parser) parseForm() lang.Expr {
 	case tokens.LBRACKET:
 		p.next()
 		return p.parseList()
+	case tokens.LBRACER:
+		p.next()
+		return p.parseBlock()
 	case tokens.LPAREN:
 		p.next()
 		return p.parseApplication()
@@ -63,6 +66,17 @@ func (p *parser) parseList() lang.Expr {
 	}
 	p.accept(tokens.RBRACKET)
 	return lang.SliceToList(list)
+}
+
+func (p *parser) parseBlock() lang.Expr {
+	var list []lang.Expr
+
+	for p.currentToken.Typ != tokens.RBRACER {
+		expr := p.parseForm()
+		list = append(list, expr)
+	}
+	p.accept(tokens.RBRACER)
+	return lang.MakeBlock(lang.SliceToList(list))
 }
 
 func (p *parser) parseName() lang.Expr {

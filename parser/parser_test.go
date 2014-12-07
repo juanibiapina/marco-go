@@ -90,6 +90,16 @@ func TestParseApplication(t *testing.T) {
 	}
 }
 
+func TestParseBlock(t *testing.T) {
+	block := Parse(scan("{ 1 2 }"))
+
+	expected := lang.MakeSingleExprBlock(lang.MakeBlock(lang.SliceToList([]lang.Expr{lang.MakeNumber(1), lang.MakeNumber(2)})))
+
+	if !reflect.DeepEqual(block, expected) {
+		t.Errorf("Expected '%v' but got '%v'", expected, block)
+	}
+}
+
 func TestParseNestedNames(t *testing.T) {
 	block := Parse(scan("a.b"))
 
