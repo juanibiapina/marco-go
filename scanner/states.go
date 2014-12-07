@@ -7,39 +7,39 @@ import (
 
 type stateFn func(*scanner) stateFn
 
-func lexNumber(l *scanner) stateFn {
+func scanNumber(l *scanner) stateFn {
 	l.acceptRun("0123456789")
 	l.emit(tokens.NUMBER)
 
-	return lexInitial
+	return scanInitial
 }
 
-func lexName(l *scanner) stateFn {
+func scanName(l *scanner) stateFn {
 	l.acceptRunFunc(unicode.IsLetter)
 	l.emit(tokens.NAME)
 
-	return lexInitial
+	return scanInitial
 }
 
-func lexSymbol(l *scanner) stateFn {
+func scanSymbol(l *scanner) stateFn {
 	l.ignore()
 	l.acceptRunFunc(unicode.IsLetter)
 	l.emit(tokens.SYMBOL)
 
-	return lexInitial
+	return scanInitial
 }
 
-func lexString(l *scanner) stateFn {
+func scanString(l *scanner) stateFn {
 	l.ignore()
 	l.acceptUntil('"')
 	l.emit(tokens.STRING)
 	l.accept('"')
 	l.ignore()
 
-	return lexInitial
+	return scanInitial
 }
 
-func lexInitial(l *scanner) stateFn {
+func scanInitial(l *scanner) stateFn {
 	r := l.next()
 
 	if r == -1 {
@@ -48,51 +48,51 @@ func lexInitial(l *scanner) stateFn {
 	}
 
 	if r == ':' {
-		return lexSymbol
+		return scanSymbol
 	}
 
 	if r == '"' {
-		return lexString
+		return scanString
 	}
 
 	if r == '.' {
 		l.emit(tokens.DOT)
-		return lexInitial
+		return scanInitial
 	}
 
 	if unicode.IsDigit(r) {
 		l.backup()
-		return lexNumber
+		return scanNumber
 	}
 
 	if unicode.IsLetter(r) {
 		l.backup()
-		return lexName
+		return scanName
 	}
 
 	if unicode.IsSpace(r) {
 		l.ignore()
-		return lexInitial
+		return scanInitial
 	}
 
 	if r == '(' {
 		l.emit(tokens.LPAREN)
-		return lexInitial
+		return scanInitial
 	}
 
 	if r == ')' {
 		l.emit(tokens.RPAREN)
-		return lexInitial
+		return scanInitial
 	}
 
 	if r == '[' {
 		l.emit(tokens.LBRACKET)
-		return lexInitial
+		return scanInitial
 	}
 
 	if r == ']' {
 		l.emit(tokens.RBRACKET)
-		return lexInitial
+		return scanInitial
 	}
 
 	l.errorf("Unrecognized character: %v", string(r))

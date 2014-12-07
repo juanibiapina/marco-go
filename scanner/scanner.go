@@ -69,7 +69,7 @@ func (l *scanner) errorf(format string, args ...interface{}) {
 }
 
 func (l *scanner) run() {
-	for state := lexInitial; state != nil; {
+	for state := scanInitial; state != nil; {
 		state = state(l)
 	}
 	close(l.tokens)
