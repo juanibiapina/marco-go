@@ -5,7 +5,7 @@ import (
 )
 
 type symbol struct {
-	Value string
+	value string
 }
 
 func MakeSymbol(name string) Expr {
@@ -13,5 +13,5 @@ func MakeSymbol(name string) Expr {
 }
 
 func (s *symbol) String() string {
-	return fmt.Sprintf(":%v", s.Value)
+	return fmt.Sprintf(":%v", s.value)
 }

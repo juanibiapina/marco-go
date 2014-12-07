@@ -5,7 +5,7 @@ import (
 )
 
 type mstring struct {
-	Value string
+	value string
 }
 
 func MakeString(value string) Expr {
@@ -13,5 +13,5 @@ func MakeString(value string) Expr {
 }
 
 func (s *mstring) String() string {
-	return fmt.Sprintf("\"%v\"", s.Value)
+	return fmt.Sprintf("\"%v\"", s.value)
 }

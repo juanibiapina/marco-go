@@ -5,7 +5,7 @@ import (
 )
 
 type number struct {
-	Value int64
+	value int64
 }
 
 func MakeNumber(v int64) *number {
@@ -13,5 +13,5 @@ func MakeNumber(v int64) *number {
 }
 
 func (n *number) String() string {
-	return fmt.Sprintf("%v", n.Value)
+	return fmt.Sprintf("%v", n.value)
 }
