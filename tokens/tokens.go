@@ -13,6 +13,7 @@ const (
 	NAME
 	SYMBOL
 	STRING
+	DOT
 	EOF
 	LPAREN
 	RPAREN
@@ -30,6 +31,7 @@ var typeNames = []string{
 	"TOKEN_NAME",
 	"TOKEN_SYMBOL",
 	"TOKEN_STRING",
+	"TOKEN_DOT",
 	"TOKEN_EOF",
 	"TOKEN_LPAREN",
 	"TOKEN_RPAREN",

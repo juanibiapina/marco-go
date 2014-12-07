@@ -80,3 +80,9 @@ func TestScanApplication(t *testing.T) {
 	assertNextToken(t, c, tokens.NUMBER, "1")
 	assertNextToken(t, c, tokens.RPAREN, ")")
 }
+
+func TestScanDot(t *testing.T) {
+	c := Scan([]byte("."))
+
+	assertNextToken(t, c, tokens.DOT, ".")
+}

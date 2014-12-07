@@ -55,6 +55,11 @@ func lexInitial(l *scanner) stateFn {
 		return lexString
 	}
 
+	if r == '.' {
+		l.emit(tokens.DOT)
+		return lexInitial
+	}
+
 	if unicode.IsDigit(r) {
 		l.backup()
 		return lexNumber
