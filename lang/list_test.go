@@ -1,6 +1,7 @@
 package lang
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -14,7 +15,7 @@ func TestListToSlice(t *testing.T) {
 		t.Errorf("Result has wrong length, expected '%v', got '%v'", len(expected), len(result))
 	}
 
-	if result[0] != expected[0] {
+	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }
@@ -25,7 +26,7 @@ func TestSliceToList(t *testing.T) {
 	result := SliceToList(list)
 	expected := MakePair(MakeNumber(42), MakePair(MakeString("value"), MakeNil()))
 
-	if result != expected {
+	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)
 	}
 }

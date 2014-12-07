@@ -4,8 +4,8 @@ func ListToSlice(expr Expr) []Expr {
 	var result []Expr
 	current := expr
 	for !IsNil(current) {
-		result = append(result, current.(Pair).First)
-		current = current.(Pair).Second
+		result = append(result, current.(*pair).First)
+		current = current.(*pair).Second
 	}
 	return result
 }

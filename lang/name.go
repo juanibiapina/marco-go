@@ -1,14 +1,25 @@
 package lang
 
-type Name struct {
+import (
+	"fmt"
+)
+
+type name struct {
 	Value  string
 	Nested Expr
 }
 
 func MakeName(value string) Expr {
-	return Name{value, nil}
+	return &name{value, nil}
 }
 
 func MakeNestedName(value string, nested Expr) Expr {
-	return Name{value, nested}
+	return &name{value, nested}
+}
+
+func (n *name) String() string {
+	if n.Nested != nil {
+		return fmt.Sprintf("%v.%v", n.Value, n.Nested.String())
+	}
+	return n.Value
 }

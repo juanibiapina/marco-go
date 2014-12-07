@@ -4,21 +4,21 @@ import (
 	"log"
 )
 
-func Eval(expr Expr, env *Env) Expr {
+func Eval(expr Expr, env *environment) Expr {
 	switch expr := expr.(type) {
-	case Block:
+	case *block:
 		return expr.WithEnv(env)
-	case Number:
+	case *number:
 		return expr
-	case Symbol:
+	case *symbol:
 		return expr
-	case String:
+	case *mstring:
 		return expr
-	case Name:
+	case *name:
 		return env.Lookup(expr)
-	case Nil:
+	case *mnil:
 		return expr
-	case Pair:
+	case *pair:
 		return MakePair(Eval(expr.First, env), Eval(expr.Second, env))
 	default:
 		log.Fatalf("Evaluation error, no match for '%v'", expr)

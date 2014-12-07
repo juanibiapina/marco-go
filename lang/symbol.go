@@ -1,9 +1,17 @@
 package lang
 
-type Symbol struct {
+import (
+	"fmt"
+)
+
+type symbol struct {
 	Value string
 }
 
 func MakeSymbol(name string) Expr {
-	return Symbol{name}
+	return &symbol{name}
+}
+
+func (s *symbol) String() string {
+	return fmt.Sprintf(":%v", s.Value)
 }

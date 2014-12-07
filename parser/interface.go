@@ -5,7 +5,7 @@ import (
 	"github.com/juanibiapina/marco/tokens"
 )
 
-func Parse(tokens chan tokens.Token) lang.Block {
+func Parse(tokens chan tokens.Token) lang.Expr {
 	p := &parser{
 		tokens: tokens,
 	}

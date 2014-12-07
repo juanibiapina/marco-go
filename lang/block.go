@@ -1,33 +1,33 @@
 package lang
 
-type Block struct {
+type block struct {
 	Forms   Expr
-	Lexical *Env
+	Lexical *environment
 }
 
-func MakeBlock(forms []Expr) Block {
-	return Block{SliceToList(forms), nil}
+func MakeBlock(forms Expr) *block {
+	return &block{forms, nil}
 }
 
-func MakeSingleExprBlock(form Expr) Block {
-	return MakeBlock([]Expr{form})
+func MakeSingleExprBlock(form Expr) *block {
+	return MakeBlock(SliceToList([]Expr{form}))
 }
 
-func ToBlock(expr Expr) Block {
-	block, ok := expr.(Block)
+func ToBlock(expr Expr) *block {
+	block, ok := expr.(*block)
 
 	if !ok {
-		panic("Expected Block") // TODO better error handling
+		panic("Expected block") // TODO better error handling
 	}
 
 	return block
 }
 
-func (block Block) WithEnv(env *Env) Block {
-	return Block{block.Forms, env}
+func (b *block) WithEnv(env *environment) *block {
+	return &block{b.Forms, env}
 }
 
-func (block Block) Invoke() Expr {
+func (block *block) Invoke() Expr {
 	forms := ListToSlice(block.Forms)
 
 	var result Expr = MakeNil()
@@ -35,4 +35,8 @@ func (block Block) Invoke() Expr {
 		result = Eval(form, block.Lexical)
 	}
 	return result
+}
+
+func (block *block) String() string {
+	return "Block"
 }

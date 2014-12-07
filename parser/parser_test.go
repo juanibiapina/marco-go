@@ -4,6 +4,7 @@ import (
 	"github.com/juanibiapina/marco/lang"
 	"github.com/juanibiapina/marco/scanner"
 	"github.com/juanibiapina/marco/tokens"
+	"reflect"
 	"testing"
 )
 
@@ -14,9 +15,9 @@ func scan(src string) chan tokens.Token {
 func TestParseNumbers(t *testing.T) {
 	block := Parse(scan("1"))
 
-	expected := lang.Block{lang.Pair{lang.MakeNumber(1), lang.MakeNil()}, nil}
+	expected := lang.MakeBlock(lang.MakePair(lang.MakeNumber(1), lang.MakeNil()))
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -24,9 +25,9 @@ func TestParseNumbers(t *testing.T) {
 func TestParseNames(t *testing.T) {
 	block := Parse(scan("def"))
 
-	expected := lang.Block{lang.Pair{lang.MakeName("def"), lang.MakeNil()}, nil}
+	expected := lang.MakeBlock(lang.MakePair(lang.MakeName("def"), lang.MakeNil()))
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -34,15 +35,13 @@ func TestParseNames(t *testing.T) {
 func TestParseString(t *testing.T) {
 	block := Parse(scan("\"stuff here\""))
 
-	expected := lang.Block{
-		lang.Pair{
-			lang.String{"stuff here"},
+	expected := lang.MakeBlock(
+		lang.MakePair(lang.MakeString("stuff here"),
 			lang.MakeNil(),
-		},
-		nil,
-	}
+		),
+	)
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -50,9 +49,9 @@ func TestParseString(t *testing.T) {
 func TestParseTwoNumbers(t *testing.T) {
 	block := Parse(scan("1\n\n2"))
 
-	expected := lang.Block{lang.Pair{lang.MakeNumber(1), lang.Pair{lang.MakeNumber(2), lang.MakeNil()}}, nil}
+	expected := lang.MakeBlock(lang.MakePair(lang.MakeNumber(1), lang.MakePair(lang.MakeNumber(2), lang.MakeNil())))
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -60,30 +59,23 @@ func TestParseTwoNumbers(t *testing.T) {
 func TestParseTwoLists(t *testing.T) {
 	block := Parse(scan("[1 2]\n\n[3 4]"))
 
-	expected := lang.Block{
-		lang.Pair{
-			lang.Pair{
-				lang.MakeNumber(1),
-				lang.Pair{
-					lang.MakeNumber(2),
-					lang.MakeNil(),
-				},
-			},
-			lang.Pair{
-				lang.Pair{
-					lang.MakeNumber(3),
-					lang.Pair{
-						lang.MakeNumber(4),
-						lang.MakeNil(),
-					},
-				},
+	expected := lang.MakeBlock(
+		lang.MakePair(lang.MakePair(lang.MakeNumber(1),
+			lang.MakePair(lang.MakeNumber(2),
 				lang.MakeNil(),
-			},
-		},
-		nil,
-	}
+			),
+		),
+			lang.MakePair(lang.MakePair(lang.MakeNumber(3),
+				lang.MakePair(lang.MakeNumber(4),
+					lang.MakeNil(),
+				),
+			),
+				lang.MakeNil(),
+			),
+		),
+	)
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -91,11 +83,9 @@ func TestParseTwoLists(t *testing.T) {
 func TestParseApplication(t *testing.T) {
 	block := Parse(scan("(a b c)"))
 
-	expected := lang.MakeSingleExprBlock(lang.Application{
-		lang.SliceToList([]lang.Expr{lang.MakeName("a"), lang.MakeName("b"), lang.MakeName("c")}),
-	})
+	expected := lang.MakeSingleExprBlock(lang.MakeApplication(lang.SliceToList([]lang.Expr{lang.MakeName("a"), lang.MakeName("b"), lang.MakeName("c")})))
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
@@ -105,7 +95,7 @@ func TestParseNestedNames(t *testing.T) {
 
 	expected := lang.MakeSingleExprBlock(lang.MakeNestedName("a", lang.MakeName("b")))
 
-	if block != expected {
+	if !reflect.DeepEqual(block, expected) {
 		t.Errorf("Expected '%v' but got '%v'", expected, block)
 	}
 }
