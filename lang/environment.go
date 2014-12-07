@@ -1,5 +1,9 @@
 package lang
 
+import (
+	"fmt"
+)
+
 type environment struct {
 	bindings map[string]Expr
 }
@@ -11,7 +15,11 @@ func MakeEnv() *environment {
 }
 
 func (env *environment) Lookup(name *name) Expr {
-	return env.bindings[name.Value]
+	value, ok := env.bindings[name.Value]
+	if !ok {
+		panic(fmt.Sprintf("Binding not found: '%v'", name))
+	}
+	return value
 }
 
 func (env *environment) Extend(name string, expr Expr) {
