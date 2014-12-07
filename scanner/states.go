@@ -8,14 +8,14 @@ import (
 type stateFn func(*scanner) stateFn
 
 func scanNumber(l *scanner) stateFn {
-	l.acceptRun("0123456789")
+	l.accept(unicode.IsDigit)
 	l.emit(tokens.NUMBER)
 
 	return scanInitial
 }
 
 func scanName(l *scanner) stateFn {
-	l.acceptLexeme(lexIdentifier)
+	l.accept(lexIdentifier)
 	l.emit(tokens.NAME)
 
 	return scanInitial
@@ -23,7 +23,7 @@ func scanName(l *scanner) stateFn {
 
 func scanSymbol(l *scanner) stateFn {
 	l.ignore() // ignore the ':' TODO panic on wrong ignore
-	l.acceptLexeme(lexIdentifier)
+	l.accept(lexIdentifier)
 	l.emit(tokens.SYMBOL)
 
 	return scanInitial
@@ -31,9 +31,9 @@ func scanSymbol(l *scanner) stateFn {
 
 func scanString(l *scanner) stateFn {
 	l.ignore()
-	l.acceptUntil('"')
+	l.acceptUntilRune('"')
 	l.emit(tokens.STRING)
-	l.accept('"')
+	l.acceptRune('"')
 	l.ignore()
 
 	return scanInitial

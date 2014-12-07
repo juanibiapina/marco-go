@@ -3,7 +3,6 @@ package scanner
 import (
 	"github.com/juanibiapina/marco/tokens"
 	"log"
-	"strings"
 	"unicode/utf8"
 )
 
@@ -14,8 +13,6 @@ type scanner struct {
 	pos    int
 	width  int
 }
-
-type lexeme func(rune) bool
 
 func (l *scanner) next() (r rune) {
 	r, l.width = utf8.DecodeRune(l.input[l.pos:])
@@ -39,13 +36,7 @@ func (l *scanner) emit(typ tokens.TokenType) {
 	l.start = l.pos
 }
 
-func (l *scanner) acceptLexeme(lex lexeme) {
-	for lex(l.next()) {
-	}
-	l.backup()
-}
-
-func (l *scanner) accept(r rune) {
+func (l *scanner) acceptRune(r rune) {
 	c := l.next()
 	if c == r {
 		return
@@ -54,20 +45,14 @@ func (l *scanner) accept(r rune) {
 	l.backup()
 }
 
-func (l *scanner) acceptRun(values string) {
-	for strings.IndexRune(values, l.next()) >= 0 {
-	}
-	l.backup()
-}
-
-func (l *scanner) acceptRunFunc(f func(rune) bool) {
-	for f(l.next()) {
-	}
-	l.backup()
-}
-
-func (l *scanner) acceptUntil(r rune) {
+func (l *scanner) acceptUntilRune(r rune) {
 	for l.next() != r {
+	}
+	l.backup()
+}
+
+func (l *scanner) accept(m matcher) {
+	for m(l.next()) {
 	}
 	l.backup()
 }
