@@ -15,6 +15,8 @@ type scanner struct {
 	width  int
 }
 
+type lexeme func(rune) bool
+
 func (l *scanner) next() (r rune) {
 	r, l.width = utf8.DecodeRune(l.input[l.pos:])
 	if l.width == 0 {
@@ -35,6 +37,12 @@ func (l *scanner) backup() {
 func (l *scanner) emit(typ tokens.TokenType) {
 	l.tokens <- tokens.New(typ, string(l.input[l.start:l.pos]))
 	l.start = l.pos
+}
+
+func (l *scanner) acceptLexeme(lex lexeme) {
+	for lex(l.next()) {
+	}
+	l.backup()
 }
 
 func (l *scanner) accept(r rune) {

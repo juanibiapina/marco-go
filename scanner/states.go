@@ -15,15 +15,15 @@ func scanNumber(l *scanner) stateFn {
 }
 
 func scanName(l *scanner) stateFn {
-	l.acceptRunFunc(unicode.IsLetter)
+	l.acceptLexeme(lexIdentifier)
 	l.emit(tokens.NAME)
 
 	return scanInitial
 }
 
 func scanSymbol(l *scanner) stateFn {
-	l.ignore()
-	l.acceptRunFunc(unicode.IsLetter)
+	l.ignore() // ignore the ':' TODO panic on wrong ignore
+	l.acceptLexeme(lexIdentifier)
 	l.emit(tokens.SYMBOL)
 
 	return scanInitial
