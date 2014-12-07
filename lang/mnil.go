@@ -3,11 +3,7 @@ package lang
 type mnil struct {
 }
 
-var nilSingleton mnil
-
-func MakeNil() Expr {
-	return &nilSingleton
-}
+var Nil *mnil = &mnil{}
 
 func IsNil(e Expr) bool {
 	_, ok := e.(*mnil)

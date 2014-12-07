@@ -6,7 +6,7 @@ import (
 )
 
 func TestListToSlice(t *testing.T) {
-	list := MakePair(MakeNumber(42), MakePair(MakeString("value"), MakeNil()))
+	list := MakePair(MakeNumber(42), MakePair(MakeString("value"), Nil))
 
 	result := ListToSlice(list)
 	expected := []Expr{MakeNumber(42), MakeString("value")}
@@ -24,7 +24,7 @@ func TestSliceToList(t *testing.T) {
 	list := []Expr{MakeNumber(42), MakeString("value")}
 
 	result := SliceToList(list)
-	expected := MakePair(MakeNumber(42), MakePair(MakeString("value"), MakeNil()))
+	expected := MakePair(MakeNumber(42), MakePair(MakeString("value"), Nil))
 
 	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)

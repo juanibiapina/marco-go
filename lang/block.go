@@ -30,7 +30,7 @@ func (b *block) WithEnv(env *environment) *block {
 func (block *block) Invoke() Expr {
 	forms := ListToSlice(block.Forms)
 
-	var result Expr = MakeNil()
+	var result Expr = Nil
 	for _, form := range forms {
 		result = Eval(form, block.Lexical)
 	}

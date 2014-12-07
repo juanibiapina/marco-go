@@ -34,7 +34,7 @@ func TestEvalName(t *testing.T) {
 func TestEvalBlock(t *testing.T) {
 	result := Eval(MakeSingleExprBlock(MakeNumber(42)), env)
 
-	expected := MakeBlock(MakePair(MakeNumber(42), MakeNil())).WithEnv(env)
+	expected := MakeBlock(MakePair(MakeNumber(42), Nil)).WithEnv(env)
 
 	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Wrong result, expected '%v', got '%v'", expected, result)

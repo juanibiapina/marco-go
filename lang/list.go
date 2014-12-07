@@ -11,7 +11,7 @@ func ListToSlice(expr Expr) []Expr {
 }
 
 func SliceToList(l []Expr) Expr {
-	result := MakeNil()
+	var result Expr = Nil
 	for i := len(l) - 1; i >= 0; i-- {
 		result = MakePair(l[i], result)
 	}
