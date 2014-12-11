@@ -2,7 +2,7 @@ package lang
 
 type block struct {
 	Forms   Expr
-	Lexical *environment
+	Lexical *Environment
 }
 
 func MakeBlock(forms Expr) *block {
@@ -23,7 +23,7 @@ func ToBlock(expr Expr) *block {
 	return block
 }
 
-func (b *block) WithEnv(env *environment) *block {
+func (b *block) WithEnv(env *Environment) *block {
 	return &block{b.Forms, env}
 }
 

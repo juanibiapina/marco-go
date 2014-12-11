@@ -1,6 +1,6 @@
 package lang
 
-type nativeFunc func(*environment, *environment) Expr
+type nativeFunc func(*Environment, *Environment) Expr
 
 type nativeBlock struct {
 	f nativeFunc
@@ -10,7 +10,7 @@ func MakeNativeBlock(f nativeFunc) *nativeBlock {
 	return &nativeBlock{f}
 }
 
-func (b *nativeBlock) Invoke(closure *environment, dynamic *environment) Expr {
+func (b *nativeBlock) Invoke(closure *Environment, dynamic *Environment) Expr {
 	return b.f(closure, dynamic)
 }
 

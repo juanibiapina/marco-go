@@ -8,7 +8,7 @@ type module struct {
 	exports map[string]Expr
 }
 
-func MakeModule(env *environment) *module {
+func MakeModule(env *Environment) *module {
 	return &module{env.Exports}
 }
 

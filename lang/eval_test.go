@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var env *environment
+var env *Environment
 
 func init() {
 	env = MakeEnv()

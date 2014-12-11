@@ -21,7 +21,7 @@ func (f *function) String() string {
 	return "Function"
 }
 
-func (f *function) Apply(args []Expr, dynamic *environment) Expr {
+func (f *function) Apply(args []Expr, dynamic *Environment) Expr {
 	switch body := f.Body.(type) {
 	case *nativeBlock:
 		env := MakeEnv()

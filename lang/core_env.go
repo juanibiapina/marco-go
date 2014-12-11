@@ -7,7 +7,7 @@ import (
 var nativeDef *function = MakeFunction(
 	MakeArgs("symbol", "value"),
 	MakeNativeBlock(
-		func(closure *environment, dynamic *environment) Expr {
+		func(closure *Environment, dynamic *Environment) Expr {
 			s := closure.Lookup("symbol")
 			v := closure.Lookup("value")
 			dynamic.Extend(s.(*symbol).Value(), v)
@@ -17,12 +17,12 @@ var nativeDef *function = MakeFunction(
 var nativePrintln *function = MakeFunction(
 	MakeArgs("value"),
 	MakeNativeBlock(
-		func(closure *environment, dynamic *environment) Expr {
+		func(closure *Environment, dynamic *Environment) Expr {
 			fmt.Println(closure.Lookup("value"))
 			return Nil
 		}))
 
-func MakeCoreEnv() *environment {
+func MakeCoreEnv() *Environment {
 	env := MakeEnv()
 
 	env.Extend("println", nativePrintln)

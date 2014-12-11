@@ -4,7 +4,7 @@ import (
 	"log"
 )
 
-func Eval(expr Expr, env *environment) Expr {
+func Eval(expr Expr, env *Environment) Expr {
 	switch expr := expr.(type) {
 	case *block:
 		return expr.WithEnv(env)

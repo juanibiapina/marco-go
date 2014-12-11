@@ -8,10 +8,11 @@ import (
 )
 
 type runtime struct {
+	env *lang.Environment
 }
 
 func New() *runtime {
-	return &runtime{}
+	return &runtime{lang.MakeCoreEnv()}
 }
 
 func convertInput(src interface{}) []byte {
@@ -30,8 +31,7 @@ func (r *runtime) Run(isrc interface{}) lang.Expr {
 	src := convertInput(isrc)
 	tokens := scanner.Scan(src)
 	blockAst := parser.Parse(tokens)
-	env := lang.MakeCoreEnv()
-	expr := lang.Eval(blockAst, env)
+	expr := lang.Eval(blockAst, r.env)
 	block := lang.ToBlock(expr)
 	return block.Invoke()
 }
