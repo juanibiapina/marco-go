@@ -19,3 +19,12 @@ func (s *symbol) String() string {
 func (s *symbol) Value() string {
 	return s.value
 }
+
+func (s *symbol) Equal(o Expr) bool {
+	switch other := o.(type) {
+	case *symbol:
+		return s.value == other.value
+	default:
+		return false
+	}
+}

@@ -33,3 +33,12 @@ func (f *function) Apply(args []Expr, dynamic *Environment) Expr {
 	}
 	return nil
 }
+
+func (f *function) Equal(o Expr) bool {
+	switch other := o.(type) {
+	case *function:
+		return f == other
+	default:
+		return false
+	}
+}

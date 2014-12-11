@@ -23,3 +23,7 @@ func (m *module) Lookup(name string) Expr {
 func (m *module) String() string {
 	return "Module"
 }
+
+func (n *module) Equal(o Expr) bool {
+	return false
+}

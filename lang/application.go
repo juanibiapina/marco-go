@@ -11,3 +11,12 @@ func MakeApplication(list Expr) *application {
 func (app *application) String() string {
 	return "Application"
 }
+
+func (app *application) Equal(o Expr) bool {
+	switch other := o.(type) {
+	case *application:
+		return app.List.Equal(other.List)
+	default:
+		return false
+	}
+}

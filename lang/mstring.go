@@ -15,3 +15,12 @@ func MakeString(value string) Expr {
 func (s *mstring) String() string {
 	return fmt.Sprintf("\"%v\"", s.value)
 }
+
+func (s *mstring) Equal(o Expr) bool {
+	switch other := o.(type) {
+	case *mstring:
+		return s.value == other.value
+	default:
+		return false
+	}
+}

@@ -36,3 +36,7 @@ func (env *Environment) Export(name string) {
 func (env *Environment) String() string {
 	return "Environment"
 }
+
+func (env *Environment) Equal(o Expr) bool {
+	return false
+}

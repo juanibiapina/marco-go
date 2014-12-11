@@ -17,3 +17,7 @@ func (b *nativeBlock) Invoke(closure *Environment, dynamic *Environment) Expr {
 func (b *nativeBlock) String() string {
 	return "NativeBlock"
 }
+
+func (b *nativeBlock) Equal(o Expr) bool {
+	return false
+}

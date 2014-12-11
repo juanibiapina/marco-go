@@ -40,3 +40,12 @@ func (block *block) Invoke() Expr {
 func (block *block) String() string {
 	return "Block"
 }
+
+func (b *block) Equal(o Expr) bool {
+	switch other := o.(type) {
+	case *block:
+		return b == other
+	default:
+		return false
+	}
+}

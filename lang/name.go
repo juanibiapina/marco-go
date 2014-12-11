@@ -23,3 +23,7 @@ func (n *name) String() string {
 	}
 	return n.Value
 }
+
+func (s *name) Equal(o Expr) bool {
+	return false
+}

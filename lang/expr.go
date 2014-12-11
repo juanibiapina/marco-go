@@ -6,4 +6,5 @@ import (
 
 type Expr interface {
 	fmt.Stringer
+	Equal(Expr) bool
 }

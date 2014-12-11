@@ -8,6 +8,8 @@ func Eval(expr Expr, env *Environment) Expr {
 	switch expr := expr.(type) {
 	case *block:
 		return expr.WithEnv(env)
+	case mnil:
+		return expr
 	case *number:
 		return expr
 	case *symbol:
