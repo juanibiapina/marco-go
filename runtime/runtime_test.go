@@ -1,4 +1,4 @@
-package marco
+package runtime
 
 import (
 	"github.com/juanibiapina/marco/lang"
@@ -7,7 +7,8 @@ import (
 )
 
 func TestRunString(t *testing.T) {
-	expr := Run("1")
+	r := New()
+	expr := r.Run("1")
 	expected := lang.MakeNumber(1)
 
 	if !reflect.DeepEqual(expr, expected) {

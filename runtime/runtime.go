@@ -1,4 +1,4 @@
-package marco
+package runtime
 
 import (
 	"github.com/juanibiapina/marco/lang"
@@ -6,6 +6,13 @@ import (
 	"github.com/juanibiapina/marco/scanner"
 	"log"
 )
+
+type runtime struct {
+}
+
+func New() *runtime {
+	return &runtime{}
+}
 
 func convertInput(src interface{}) []byte {
 	switch src := src.(type) {
@@ -19,7 +26,8 @@ func convertInput(src interface{}) []byte {
 	}
 }
 
-func run(src []byte) lang.Expr {
+func (r *runtime) Run(isrc interface{}) lang.Expr {
+	src := convertInput(isrc)
 	tokens := scanner.Scan(src)
 	blockAst := parser.Parse(tokens)
 	env := lang.MakeCoreEnv()
