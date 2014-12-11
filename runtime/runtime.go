@@ -7,12 +7,12 @@ import (
 	"log"
 )
 
-type runtime struct {
+type Runtime struct {
 	env *lang.Environment
 }
 
-func New() *runtime {
-	return &runtime{lang.MakeCoreEnv()}
+func New() *Runtime {
+	return &Runtime{lang.MakeCoreEnv()}
 }
 
 func convertInput(src interface{}) []byte {
@@ -27,7 +27,7 @@ func convertInput(src interface{}) []byte {
 	}
 }
 
-func (r *runtime) Run(isrc interface{}) lang.Expr {
+func (r *Runtime) Run(isrc interface{}) lang.Expr {
 	src := convertInput(isrc)
 	tokens := scanner.Scan(src)
 	blockAst := parser.Parse(tokens)

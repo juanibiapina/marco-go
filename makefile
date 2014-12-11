@@ -7,6 +7,7 @@ test:
 
 build: test
 	go build -o bin/marco cmd/marco/main.go
+	go build -o bin/imarco cmd/imarco/main.go
 
 $(MARCOTESTS):
 	@./bin/marco $@ > /dev/null
