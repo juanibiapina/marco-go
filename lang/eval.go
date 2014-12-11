@@ -26,6 +26,14 @@ func Eval(expr Expr, env *environment) Expr {
 		return expr
 	case *pair:
 		return MakePair(Eval(expr.First, env), Eval(expr.Second, env))
+	case *application:
+		operand := Eval(expr.List.(*pair).First, env).(*function)
+		args := ListToSlice(expr.List.(*pair).Second)
+		eargs := make([]Expr, 0, len(args))
+		for _, arg := range args {
+			eargs = append(eargs, Eval(arg, env))
+		}
+		return operand.Apply(eargs, env)
 	default:
 		log.Fatalf("Evaluation error, no match for '%v'", expr)
 		return nil

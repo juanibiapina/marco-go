@@ -14,7 +14,7 @@ func convertInput(src interface{}) []byte {
 	case string:
 		return []byte(src)
 	default:
-		log.Fatalf("Unnexpected type: '%T'", src) // use errors instead
+		log.Fatalf("Unnexpected type: '%T'", src) // TODO use errors instead
 		return nil
 	}
 }
@@ -22,12 +22,8 @@ func convertInput(src interface{}) []byte {
 func run(src []byte) lang.Expr {
 	tokens := scanner.Scan(src)
 	blockAst := parser.Parse(tokens)
-	env := lang.MakeEnv()
+	env := lang.MakeCoreEnv()
 	expr := lang.Eval(blockAst, env)
 	block := lang.ToBlock(expr)
 	return block.Invoke()
-}
-
-func Run(src interface{}) lang.Expr {
-	return run(convertInput(src))
 }
