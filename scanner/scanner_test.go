@@ -34,6 +34,7 @@ var tokenTests = []struct {
 	{"823", tokens.NUMBER, "823"},
 	{"def", tokens.NAME, "def"},
 	{"with-hyphen", tokens.NAME, "with-hyphen"},
+	{"-starting-with-hyphen", tokens.NAME, "-starting-with-hyphen"},
 	{":asdf", tokens.SYMBOL, "asdf"},
 	{":as-df", tokens.SYMBOL, "as-df"},
 	{"\"\"", tokens.STRING, ""},

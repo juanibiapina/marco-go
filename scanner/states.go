@@ -84,7 +84,7 @@ func scanInitial(l *scanner) stateFn {
 		return scanNumber
 	}
 
-	if unicode.IsLetter(r) {
+	if lexIdentifier(r) {
 		l.backup()
 		return scanName
 	}
