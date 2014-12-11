@@ -15,3 +15,7 @@ func MakeSymbol(name string) Expr {
 func (s *symbol) String() string {
 	return fmt.Sprintf(":%v", s.value)
 }
+
+func (s *symbol) Value() string {
+	return s.value
+}
