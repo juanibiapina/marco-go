@@ -20,7 +20,7 @@ func (p *pair) String() string {
 func (p *pair) Equal(o Expr) bool {
 	switch other := o.(type) {
 	case *pair:
-		return p.First == other.First && p.Second == other.Second
+		return p.First.Equal(other.First) && p.Second.Equal(other.Second)
 	default:
 		return false
 	}
