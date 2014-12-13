@@ -14,6 +14,12 @@ type scanner struct {
 	width  int
 }
 
+func (l *scanner) peek() (r rune) {
+	n := l.next()
+	l.backup()
+	return n
+}
+
 func (l *scanner) next() (r rune) {
 	r, l.width = utf8.DecodeRune(l.input[l.pos:])
 	if l.width == 0 {

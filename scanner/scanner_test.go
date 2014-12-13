@@ -31,6 +31,8 @@ var tokenTests = []struct {
 }{
 	{"1", tokens.NUMBER, "1"},
 	{"2", tokens.NUMBER, "2"},
+	{"-1", tokens.NUMBER, "-1"},
+	{"-400", tokens.NUMBER, "-400"},
 	{"823", tokens.NUMBER, "823"},
 	{"def", tokens.NAME, "def"},
 	{"+", tokens.NAME, "+"},

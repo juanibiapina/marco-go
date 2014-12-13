@@ -8,6 +8,7 @@ import (
 type stateFn func(*scanner) stateFn
 
 func scanNumber(l *scanner) stateFn {
+	l.acceptRune('-')
 	l.accept(unicode.IsDigit)
 	l.emit(tokens.NUMBER)
 
@@ -77,6 +78,17 @@ func scanInitial(l *scanner) stateFn {
 	if r == '.' {
 		l.emit(tokens.DOT)
 		return scanInitial
+	}
+
+	if r == '-' {
+		n := l.peek()
+		if unicode.IsDigit(n) {
+			l.backup()
+			return scanNumber
+		} else {
+			l.backup()
+			return scanName
+		}
 	}
 
 	if unicode.IsDigit(r) {
