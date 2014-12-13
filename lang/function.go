@@ -5,10 +5,10 @@ type function struct {
 	Body   Expr
 }
 
-func MakeArgs(names ...string) Expr {
-	args := make([]Expr, 0, len(names))
-	for _, name := range names {
-		args = append(args, MakeName(name))
+func MakeArgs(values ...string) Expr {
+	args := make([]Expr, 0, len(values))
+	for _, v := range values {
+		args = append(args, MakeSymbol(v))
 	}
 	return SliceToList(args)
 }
@@ -27,11 +27,16 @@ func (f *function) Apply(args []Expr, dynamic *Environment) Expr {
 		env := MakeEnv()
 		formals := ListToSlice(f.Formal)
 		for i, formal := range formals {
-			env.Extend(formal.(*name).Value, args[i])
+			env.Extend(formal.(*symbol).Value(), args[i])
 		}
 		return body.Invoke(env, dynamic)
 	case *block:
-		return body.Invoke()
+		env := body.Lexical
+		formals := ListToSlice(f.Formal)
+		for i, formal := range formals {
+			env.Extend(formal.(*symbol).Value(), args[i])
+		}
+		return body.WithEnv(env).Invoke()
 	}
 	panic("Wrong body type") // TODO better type checker
 }
