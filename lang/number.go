@@ -24,3 +24,7 @@ func (n *number) Equal(o Expr) bool {
 		return false
 	}
 }
+
+func (n *number) Plus(o *number) *number {
+	return MakeNumber(n.value + o.value)
+}

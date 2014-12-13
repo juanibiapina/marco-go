@@ -4,6 +4,30 @@ import (
 	"fmt"
 )
 
+var nativeIf *function = MakeFunction(
+	MakeArgs("cond", "thenClause", "elseClause"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			cond := closure.Lookup("cond")
+			thenClause := closure.Lookup("thenClause")
+			elseClause := closure.Lookup("elseClause")
+
+			if cond.(boolean).IsTrue() {
+				return thenClause.(*block).Invoke()
+			} else {
+				return elseClause.(*block).Invoke()
+			}
+		}))
+
+var nativeFunction *function = MakeFunction(
+	MakeArgs("formal", "body"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			formal := closure.Lookup("formal")
+			body := closure.Lookup("body")
+			return MakeFunction(formal, body)
+		}))
+
 var nativeEqual *function = MakeFunction(
 	MakeArgs("v1", "v2"),
 	MakeNativeBlock(
@@ -11,6 +35,15 @@ var nativeEqual *function = MakeFunction(
 			v1 := closure.Lookup("v1")
 			v2 := closure.Lookup("v2")
 			return MakeBoolean(v1.Equal(v2))
+		}))
+
+var nativePlus *function = MakeFunction(
+	MakeArgs("v1", "v2"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v1 := closure.Lookup("v1")
+			v2 := closure.Lookup("v2")
+			return v1.(*number).Plus(v2.(*number))
 		}))
 
 var nativeAssert *function = MakeFunction(
@@ -46,11 +79,24 @@ var nativePrintln *function = MakeFunction(
 func MakeCoreEnv() *Environment {
 	env := MakeEnv()
 
-	env.Extend("nil", Nil)
-	env.Extend("println", nativePrintln)
-	env.Extend("def", nativeDef)
 	env.Extend("assert", nativeAssert)
+
+	env.Extend("nil", Nil)
+
+	env.Extend("true", MakeBoolean(true))
+	env.Extend("false", MakeBoolean(false))
+
+	env.Extend("if", nativeIf)
+
+	env.Extend("println", nativePrintln)
+
+	env.Extend("def", nativeDef)
+
 	env.Extend("=", nativeEqual)
+
+	env.Extend("+", nativePlus)
+
+	env.Extend("function", nativeFunction)
 
 	return env
 }

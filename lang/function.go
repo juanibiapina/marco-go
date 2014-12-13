@@ -30,8 +30,10 @@ func (f *function) Apply(args []Expr, dynamic *Environment) Expr {
 			env.Extend(formal.(*name).Value, args[i])
 		}
 		return body.Invoke(env, dynamic)
+	case *block:
+		return body.Invoke()
 	}
-	return nil
+	panic("Wrong body type") // TODO better type checker
 }
 
 func (f *function) Equal(o Expr) bool {
