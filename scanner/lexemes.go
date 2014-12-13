@@ -4,4 +4,4 @@ import (
 	"unicode"
 )
 
-var lexIdentifier matcher = or(r('-'), r('='), unicode.IsLetter)
+var lexIdentifier matcher = or(unicode.IsLetter, r('+'), r('-'), r('*'), r('/'), r('='), r('?'))
