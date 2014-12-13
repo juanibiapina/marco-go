@@ -60,8 +60,8 @@ func scanInitial(l *scanner) stateFn {
 	}
 
 	if r == '/' {
-		r = l.next()
-		if r == '/' {
+		c := l.next()
+		if c == '/' {
 			return scanComment
 		}
 		l.backup()

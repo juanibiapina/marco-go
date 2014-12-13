@@ -36,6 +36,7 @@ var tokenTests = []struct {
 	{"823", tokens.NUMBER, "823"},
 	{"def", tokens.NAME, "def"},
 	{"+", tokens.NAME, "+"},
+	{"/", tokens.NAME, "/"},
 	{"???", tokens.NAME, "???"},
 	{"name?", tokens.NAME, "name?"},
 	{"with-hyphen", tokens.NAME, "with-hyphen"},
