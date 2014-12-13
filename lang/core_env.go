@@ -4,6 +4,15 @@ import (
 	"fmt"
 )
 
+var nativeNot *function = MakeFunction(
+	MakeArgs("v"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v := closure.Lookup("v")
+
+			return v.(boolean).Not()
+		}))
+
 var nativeCons *function = MakeFunction(
 	MakeArgs("head", "tail"),
 	MakeNativeBlock(
@@ -56,6 +65,33 @@ var nativePlus *function = MakeFunction(
 			return v1.(*number).Plus(v2.(*number))
 		}))
 
+var nativeMinus *function = MakeFunction(
+	MakeArgs("v1", "v2"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v1 := closure.Lookup("v1")
+			v2 := closure.Lookup("v2")
+			return v1.(*number).Minus(v2.(*number))
+		}))
+
+var nativeMult *function = MakeFunction(
+	MakeArgs("v1", "v2"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v1 := closure.Lookup("v1")
+			v2 := closure.Lookup("v2")
+			return v1.(*number).Mult(v2.(*number))
+		}))
+
+var nativeDiv *function = MakeFunction(
+	MakeArgs("v1", "v2"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v1 := closure.Lookup("v1")
+			v2 := closure.Lookup("v2")
+			return v1.(*number).Divide(v2.(*number))
+		}))
+
 var nativeModulo *function = MakeFunction(
 	MakeArgs("v1", "v2"),
 	MakeNativeBlock(
@@ -104,6 +140,7 @@ func MakeCoreEnv() *Environment {
 
 	env.Extend("true", MakeBoolean(true))
 	env.Extend("false", MakeBoolean(false))
+	env.Extend("not", nativeNot)
 
 	env.Extend("if", nativeIf)
 
@@ -114,6 +151,9 @@ func MakeCoreEnv() *Environment {
 	env.Extend("=", nativeEqual)
 
 	env.Extend("+", nativePlus)
+	env.Extend("-", nativeMinus)
+	env.Extend("*", nativeMult)
+	env.Extend("/", nativeDiv)
 	env.Extend("%", nativeModulo)
 
 	env.Extend("function", nativeFunction)

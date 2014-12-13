@@ -7,6 +7,7 @@ import (
 type Environment struct {
 	bindings map[string]Expr
 	Exports  map[string]Expr
+	Parent   *Environment
 }
 
 func MakeEnv() *Environment {
@@ -16,10 +17,20 @@ func MakeEnv() *Environment {
 	}
 }
 
+func SpawnEnv(parent *Environment) *Environment {
+	env := MakeEnv()
+	env.Parent = parent
+	return env
+}
+
 func (env *Environment) Lookup(name string) Expr {
 	value, ok := env.bindings[name]
 	if !ok {
-		panic(fmt.Sprintf("Binding not found: '%v'", name))
+		if env.Parent != nil {
+			return env.Parent.Lookup(name)
+		} else {
+			panic(fmt.Sprintf("Binding not found: '%v'", name))
+		}
 	}
 	return value
 }

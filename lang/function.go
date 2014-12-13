@@ -31,11 +31,12 @@ func (f *function) Apply(args []Expr, dynamic *Environment) Expr {
 		}
 		return body.Invoke(env, dynamic)
 	case *block:
-		env := body.Lexical
+		env := SpawnEnv(body.Lexical)
 		formals := ListToSlice(f.Formal)
 		for i, formal := range formals {
 			env.Extend(formal.(*symbol).Value(), args[i])
 		}
+		env.Extend("recurse", f)
 		return body.WithEnv(env).Invoke()
 	}
 	panic("Wrong body type") // TODO better type checker

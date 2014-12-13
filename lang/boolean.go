@@ -30,3 +30,7 @@ func (b boolean) Equal(o Expr) bool {
 		return false
 	}
 }
+
+func (b boolean) Not() boolean {
+	return !b
+}

@@ -29,6 +29,18 @@ func (n *number) Plus(o *number) *number {
 	return MakeNumber(n.value + o.value)
 }
 
+func (n *number) Minus(o *number) *number {
+	return MakeNumber(n.value - o.value)
+}
+
+func (n *number) Mult(o *number) *number {
+	return MakeNumber(n.value * o.value)
+}
+
+func (n *number) Divide(o *number) *number {
+	return MakeNumber(n.value / o.value)
+}
+
 func (n *number) Modulo(o *number) *number {
 	return MakeNumber(n.value % o.value)
 }
