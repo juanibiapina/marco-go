@@ -1,4 +1,4 @@
-MARCOTESTS := $(wildcard ../marco-tests/**/*.mrc)
+MARCOTESTS := $(shell find ../marco-tests -name '*.mrc')
 
 default: test-marco
 
