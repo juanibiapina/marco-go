@@ -28,3 +28,7 @@ func (n *number) Equal(o Expr) bool {
 func (n *number) Plus(o *number) *number {
 	return MakeNumber(n.value + o.value)
 }
+
+func (n *number) Modulo(o *number) *number {
+	return MakeNumber(n.value % o.value)
+}

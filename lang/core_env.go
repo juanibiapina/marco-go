@@ -4,6 +4,16 @@ import (
 	"fmt"
 )
 
+var nativeCons *function = MakeFunction(
+	MakeArgs("head", "tail"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			head := closure.Lookup("head")
+			tail := closure.Lookup("tail")
+
+			return MakePair(head, tail)
+		}))
+
 var nativeIf *function = MakeFunction(
 	MakeArgs("cond", "thenClause", "elseClause"),
 	MakeNativeBlock(
@@ -44,6 +54,15 @@ var nativePlus *function = MakeFunction(
 			v1 := closure.Lookup("v1")
 			v2 := closure.Lookup("v2")
 			return v1.(*number).Plus(v2.(*number))
+		}))
+
+var nativeModulo *function = MakeFunction(
+	MakeArgs("v1", "v2"),
+	MakeNativeBlock(
+		func(closure *Environment, dynamic *Environment) Expr {
+			v1 := closure.Lookup("v1")
+			v2 := closure.Lookup("v2")
+			return v1.(*number).Modulo(v2.(*number))
 		}))
 
 var nativeAssert *function = MakeFunction(
@@ -95,8 +114,11 @@ func MakeCoreEnv() *Environment {
 	env.Extend("=", nativeEqual)
 
 	env.Extend("+", nativePlus)
+	env.Extend("%", nativeModulo)
 
 	env.Extend("function", nativeFunction)
+
+	env.Extend("cons", nativeCons)
 
 	return env
 }
