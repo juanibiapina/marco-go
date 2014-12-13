@@ -1,3 +1,4 @@
 - recover from errors in order to show all errors in a file instead of just the first one
 - allow comments inside lists and blocks
 - add proper error handling (instead of using go's panic)
+- add line and column information to errors
